@@ -65,20 +65,16 @@ public class Program
             .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
             .ReverseMap()
             .ForMember(dest => dest.Director, src => src.Ignore());
-            cfg.CreateMap<Film, FilmCreateDTO>()
-            .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
-            .ReverseMap()
-            .ForMember(dest => dest.Director, src => src.Ignore());
-            cfg.CreateMap<Film, FilmEditDTO>()
-            .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
-            .ReverseMap()
-            .ForMember(dest => dest.Director, src => src.Ignore());
+            cfg.CreateMap<FilmCreateDTO, Film>();
+            cfg.CreateMap<FilmEditDTO, Film>();
 
             cfg.CreateMap<Genre, GenreDTO>().ReverseMap();
+			cfg.CreateMap<Genre, GenreCreateDTO>();
+			cfg.CreateMap<Genre, GenreEditDTO>();
 
-            cfg.CreateMap<Director, DirectorDTO>().ReverseMap();
-            cfg.CreateMap<Director, DirectorEditDTO>().ReverseMap();
-            cfg.CreateMap<Director, DirectorCreateDTO>().ReverseMap();
+			cfg.CreateMap<Director, DirectorDTO>().ReverseMap();
+            cfg.CreateMap<DirectorEditDTO, Director>();
+            cfg.CreateMap<DirectorCreateDTO, Director>();
 
             cfg.CreateMap<FilmGenre, FilmGenreDTO>().ReverseMap();
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VOD.Films.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingEntities : Migration
+    public partial class testar : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,7 @@ namespace VOD.Films.Database.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Released = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DirectorId = table.Column<int>(type: "int", nullable: false),
+                    DirectorId = table.Column<int>(type: "int", nullable: true),
                     ThumbnailURL = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     FilmUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),

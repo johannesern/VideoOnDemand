@@ -52,7 +52,7 @@ namespace VOD.Films.Database.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("DirectorId")
+                    b.Property<int?>("DirectorId")
                         .HasColumnType("int");
 
                     b.Property<string>("FilmUrl")
@@ -134,8 +134,7 @@ namespace VOD.Films.Database.Migrations
                     b.HasOne("VOD.Films.Database.Entities.Director", "Director")
                         .WithMany("Films")
                         .HasForeignKey("DirectorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Director");
                 });

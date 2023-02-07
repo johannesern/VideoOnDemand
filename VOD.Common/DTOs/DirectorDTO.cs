@@ -7,13 +7,13 @@ public class DirectorDTO
     public List<FilmDTO>? Films { get; set; }
 }
 
-public class DirectorCreateDTO : DirectorDTO
+public class DirectorCreateDTO
 {
     public string? Name { get; set; }
+	public List<FilmDTO>? Films { get; set; }
 }
 
-public class DirectorEditDTO : DirectorDTO
+public class DirectorEditDTO : DirectorCreateDTO
 {
-    public string? Name { get; set; }
-    public List<FilmDTO>? Films { get; set; }
+	public int? Id { get; set; }
 }
