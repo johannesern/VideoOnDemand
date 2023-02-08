@@ -1,16 +1,12 @@
 ﻿namespace VOD.Admin.UI.Classes
 {
-	public class Constants
-	{
-	}
-
 	public static class Routes
 	{
 		public static string Directors = "Directors";
 		public static string Films = "Films";
 		public static string Genres = "Genres";
-		public static string FilmGenres = "Film Genres";
-		public static string SimilarFilms = "Similar Films";
+		public static string FilmGenres = "FilmGenres";
+		public static string SimilarFilms = "SimilarFilms";
 	}
 
 	public static class PageType

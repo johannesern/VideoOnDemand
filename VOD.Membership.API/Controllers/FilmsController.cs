@@ -13,7 +13,7 @@ public class FilmsController : ControllerBase
     {
         try
         {
-            await _db.IncludeAsync<Director>();
+            await _db.IncludeAsync<Director>();            
             return await _db.HttpGetAsync<Film, FilmDTO>();
         }
         catch (Exception ex) { }

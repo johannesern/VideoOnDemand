@@ -69,8 +69,8 @@ public class Program
             cfg.CreateMap<FilmEditDTO, Film>();
 
             cfg.CreateMap<Genre, GenreDTO>().ReverseMap();
-			cfg.CreateMap<Genre, GenreCreateDTO>();
-			cfg.CreateMap<Genre, GenreEditDTO>();
+			cfg.CreateMap<GenreCreateDTO, Genre>();
+			cfg.CreateMap<GenreEditDTO, Genre>();
 
 			cfg.CreateMap<Director, DirectorDTO>().ReverseMap();
             cfg.CreateMap<DirectorEditDTO, Director>();

@@ -92,5 +92,18 @@
                 }
             }
         }
+
+        //public async Task IncludeAsync<TReferenceEntity>()
+        //    where TReferenceEntity : class, 
+        //{
+        //    var propertyNames = _db.Model.FindEntityType(typeof(TReferenceEntity))?.GetNavigations().Select(e => e.Name);
+        //    if (propertyNames != null)
+        //    {
+        //        foreach (var name in propertyNames)
+        //        {
+        //            _db.Set<TReferenceEntity>().Include(name).Load();
+        //        }
+        //    }
+        //}
     }
 }
