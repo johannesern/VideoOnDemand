@@ -83,7 +83,9 @@
         public async Task IncludeAsync<TEntity>()
             where TEntity : class, IEntity
         {
-            var propertyNames = _db.Model.FindEntityType(typeof(TEntity))?.GetNavigations().Select(e => e.Name);
+            var propertyNames = _db.Model.FindEntityType(
+                typeof(TEntity))?.GetNavigations()
+                .Select(e => e.Name);
             if(propertyNames != null) 
             {
                 foreach( var name in propertyNames)
@@ -93,17 +95,31 @@
             }
         }
 
-        //public async Task IncludeAsync<TReferenceEntity>()
-        //    where TReferenceEntity : class, 
-        //{
-        //    var propertyNames = _db.Model.FindEntityType(typeof(TReferenceEntity))?.GetNavigations().Select(e => e.Name);
-        //    if (propertyNames != null)
-        //    {
-        //        foreach (var name in propertyNames)
-        //        {
-        //            _db.Set<TReferenceEntity>().Include(name).Load();
-        //        }
-        //    }
-        //}
+		//Kopplingstabeller
+
+		public async Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
+			 where TReferenceEntity : class, IReferenceEntity
+			 where TDto : class
+		{
+			var entity = _mapper.Map<TReferenceEntity>(dto);
+			await _db.Set<TReferenceEntity>().AddAsync(entity);
+			return entity;
+		}
+
+		public async Task IncludeReferenceAsync<TReferenceEntity>()
+            where TReferenceEntity : class, IReferenceEntity
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                var propertyNames = _db.Model.FindEntityType(typeof(TReferenceEntity))?.GetNavigations().Select(e => e.Name);
+                if (propertyNames != null)
+                {
+                    foreach (var name in propertyNames)
+                    {
+                        _db.Set<TReferenceEntity>().Include(name).Load();
+                    }
+                }
+            }
+        }
     }
 }

@@ -6,3 +6,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using VOD.Films.Database.Entities;
 global using VOD.Common.DTOs;
 global using VOD.Films.API.Extensions;
+global using AutoMapper;

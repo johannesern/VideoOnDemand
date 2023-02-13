@@ -13,8 +13,10 @@ public class FilmsController : ControllerBase
     {
         try
         {
-            await _db.IncludeAsync<Director>();            
-            return await _db.HttpGetAsync<Film, FilmDTO>();
+            await _db.IncludeAsync<Director>();
+            await _db.IncludeReferenceAsync<FilmGenre>();
+			await _db.IncludeReferenceAsync<SimilarFilm>();
+			return await _db.HttpGetAsync<Film, FilmDTO>();
         }
         catch (Exception ex) { }
         return Results.BadRequest();
@@ -22,8 +24,13 @@ public class FilmsController : ControllerBase
 
     // GET api/<FilmsController>/5
     [HttpGet("{id}")]
-    public async Task<IResult> Get(int id) =>
-            await _db.HttpGetAsync<Film, FilmDTO>(id);
+    public async Task<IResult> Get(int id)
+    {
+		await _db.IncludeAsync<Film>();
+		await _db.IncludeReferenceAsync<FilmGenre>();
+		return await _db.HttpGetAsync<Film, FilmDTO>(id);
+
+    }
 
     // POST api/<FilmsController>
     [HttpPost]

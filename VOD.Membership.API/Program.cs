@@ -1,9 +1,3 @@
-using AutoMapper;
-using VOD.Common.DTOs;
-using VOD.Films.Database;
-using VOD.Films.Database.Contexts;
-using VOD.Films.Database.Entities;
-
 namespace VOD.Membership.API;
 
 public class Program
@@ -33,7 +27,6 @@ public class Program
 
         // All calls gets thir own object to use
         builder.Services.AddScoped<IDbService, DbService>();
-
         ConfigureAutomapper(builder.Services);
 
         var app = builder.Build();
@@ -63,16 +56,23 @@ public class Program
         {
             cfg.CreateMap<Film, FilmDTO>()
             .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
+            .ForMember(dest => dest.Genres, src => src.MapFrom(s => s.Genres.Select(y => y.Name).ToList()))
+            .ForMember(dest => dest.Similar, src => src.MapFrom(s => s.SimilarFilms.Select(y => y.Similar.Title)))
             .ReverseMap()
             .ForMember(dest => dest.Director, src => src.Ignore());
-            cfg.CreateMap<FilmCreateDTO, Film>();
+			cfg.CreateMap<FilmCreateDTO, Film>();			
             cfg.CreateMap<FilmEditDTO, Film>();
 
-            cfg.CreateMap<Genre, GenreDTO>().ReverseMap();
+            cfg.CreateMap<Genre, GenreDTO>()
+            .ForMember(dest => dest.Films, src => src.MapFrom(s => s.Films.Select(y => y.Title)))
+            .ReverseMap();
 			cfg.CreateMap<GenreCreateDTO, Genre>();
 			cfg.CreateMap<GenreEditDTO, Genre>();
 
-			cfg.CreateMap<Director, DirectorDTO>().ReverseMap();
+            cfg.CreateMap<Director, DirectorDTO>()
+            .ForMember(dest => dest.Films, src => src.MapFrom(s => s.Films.Select(y => y.Title).ToList()))
+            .ReverseMap()
+            .ForMember(dest => dest.Films, src => src.Ignore());
             cfg.CreateMap<DirectorEditDTO, Director>();
             cfg.CreateMap<DirectorCreateDTO, Director>();
 

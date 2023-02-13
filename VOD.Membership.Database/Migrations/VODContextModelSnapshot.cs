@@ -83,10 +83,10 @@ namespace VOD.Films.Database.Migrations
 
             modelBuilder.Entity("VOD.Films.Database.Entities.FilmGenre", b =>
                 {
-                    b.Property<int>("FilmId")
+                    b.Property<int?>("FilmId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
                     b.HasKey("FilmId", "GenreId");
@@ -141,17 +141,21 @@ namespace VOD.Films.Database.Migrations
 
             modelBuilder.Entity("VOD.Films.Database.Entities.FilmGenre", b =>
                 {
-                    b.HasOne("VOD.Films.Database.Entities.Film", null)
-                        .WithMany("FilmGenres")
+                    b.HasOne("VOD.Films.Database.Entities.Film", "Film")
+                        .WithMany()
                         .HasForeignKey("FilmId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("VOD.Films.Database.Entities.Genre", null)
+                    b.HasOne("VOD.Films.Database.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Film");
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.SimilarFilm", b =>
@@ -180,8 +184,6 @@ namespace VOD.Films.Database.Migrations
 
             modelBuilder.Entity("VOD.Films.Database.Entities.Film", b =>
                 {
-                    b.Navigation("FilmGenres");
-
                     b.Navigation("SimilarFilms");
                 });
 #pragma warning restore 612, 618

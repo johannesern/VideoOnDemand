@@ -30,5 +30,13 @@
             where TEntity: class, IEntity;
 
         Task<bool> SaveChangesAsync();
-    }
+
+        //Kopplingstabeller
+		Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
+			where TReferenceEntity : class, IReferenceEntity
+			where TDto : class;
+
+		Task IncludeReferenceAsync<TReferenceEntity>()
+            where TReferenceEntity : class, IReferenceEntity;
+	}
 }

@@ -1,11 +1,11 @@
 ﻿namespace VOD.Films.Database.Entities;
 public class Film : IEntity
 {
-    //public Film()
-    //{
-    //    SimilarFilms = new HashSet<SimilarFilm>();
-    //    Genres = new HashSet<Genre>();
-    //}
+    public Film()
+    {
+        SimilarFilms = new HashSet<SimilarFilm>();
+        Genres = new HashSet<Genre>();
+    }
 
     public int Id { get; set; }
     [MaxLength(50), Required]
@@ -22,7 +22,6 @@ public class Film : IEntity
 
     public virtual Director? Director { get; set; }
     public virtual ICollection<Genre>? Genres { get; set; }
-    public virtual ICollection<FilmGenre>? FilmGenres { get; set; }
     public virtual ICollection<SimilarFilm>? SimilarFilms { get; set; }
 
 }

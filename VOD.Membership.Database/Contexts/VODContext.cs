@@ -9,7 +9,7 @@ public class VODContext : DbContext
     public DbSet<Film> Films => Set<Film>();
     public DbSet<Genre> Genres => Set<Genre>();
     public DbSet<Director> Directors => Set<Director>();
-    public DbSet<FilmGenre> FilmGenres => Set<FilmGenre>();
+    public DbSet<FilmGenre> FilmGenre => Set<FilmGenre>();
     public DbSet<SimilarFilm> SimilarFilms => Set<SimilarFilm>();
 
     public VODContext(DbContextOptions<VODContext> options) : base(options) { }
@@ -29,12 +29,21 @@ public class VODContext : DbContext
             .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
+        builder.Entity<Genre>(entity =>
+        {
+            entity
+            .HasMany(f => f.Films)
+            .WithMany(g => g.Genres)
+            .UsingEntity<FilmGenre>()
+            .ToTable("FilmGenre");
+        });
+
         builder.Entity<Film>(entity =>
         {
             entity
             .HasMany(sf => sf.SimilarFilms)
             .WithOne(f => f.Film)
-            .HasForeignKey(d => d.FilmId)
+            .HasForeignKey(d => d.FilmId)/*SimilarFilmId*/
             .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity
