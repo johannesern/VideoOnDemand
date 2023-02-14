@@ -43,7 +43,7 @@ public class VODContext : DbContext
             entity
             .HasMany(sf => sf.SimilarFilms)
             .WithOne(f => f.Film)
-            .HasForeignKey(d => d.FilmId)/*SimilarFilmId*/
+            .HasForeignKey(d => d.FilmId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity

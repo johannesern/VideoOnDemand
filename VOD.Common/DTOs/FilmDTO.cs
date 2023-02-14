@@ -19,7 +19,6 @@ public class FilmCreateDTO
 {
     public string? Title { get; set; }
     public DateTime? Released { get; set; }
-	public int? DirectorId { get; set; }
 	public string? ThumbnailURL { get; set; }
     public string? Description { get; set; }
     public string? FilmUrl { get; set; }

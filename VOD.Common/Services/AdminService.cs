@@ -4,44 +4,30 @@ namespace VOD.Common.Services;
 
 public class AdminService : IAdminService
 {
-	public readonly FilmsHttpClient _http;
+	private readonly FilmsHttpClient _http;
 	public AdminService(FilmsHttpClient http) => _http = http;	
 
 	public async Task<List<TDto>> GetAsync<TDto>(string uri)
 	{
 		try
 		{
-            var response = await _http.Client.GetAsync(uri);
-			try
-			{
-				response.EnsureSuccessStatusCode();
-				var result = JsonSerializer.Deserialize<List<TDto>>(await
-				response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
-				{
-					PropertyNameCaseInsensitive = true
-				});
-				if (result != null)
-					return result;
-				else
-					return null;
-			}
-			catch (Exception ex)
-			{
-				return null;
-			}
+            using var response = await _http.Client.GetAsync(uri); //$"directors?freeOnly=false"
+			response.EnsureSuccessStatusCode();
+
+			var result = JsonSerializer.Deserialize<List<TDto>>(await
+			response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
+			    { PropertyNameCaseInsensitive = true }); //Matchar ihop props oavsett camelCase, PascalCase eller snakecase
+		
+            return result ?? new List<TDto>();
 		}
-		catch (Exception ex)
-		{
-			return null;
-		}
+		catch (Exception ex) { throw; }
 	}
 
     public async Task<TDto?> SingleAsync<TDto>(string uri)
     {
         try
         {
-            var response = await _http.Client.GetAsync(uri);
-            try
+            using var response = await _http.Client.GetAsync(uri);
             {
                 response.EnsureSuccessStatusCode();
                 var result = JsonSerializer.Deserialize<TDto>(await
@@ -49,20 +35,10 @@ public class AdminService : IAdminService
                 {
                     PropertyNameCaseInsensitive = true
                 });
-                if (result != null)
-                    return result;
-                else
-                    return default;
-            }
-            catch (Exception ex)
-            {
-                return default;
+                return result ?? default;
             }
         }
-        catch (Exception ex)
-        {
-            return default;
-        }
+        catch (Exception ex) { throw; }
     }
 
 	public async Task CreateAsync<TDto>(string uri, TDto dto)
@@ -74,14 +50,12 @@ public class AdminService : IAdminService
 				Encoding.UTF8,
 				"application/json");
 
-            var response = await _http.Client.PostAsync(uri, jsonContent);
-            try
+			using (HttpResponseMessage response = await _http.Client.PostAsync(uri, jsonContent))
             {
                 response.EnsureSuccessStatusCode();					
             }
-            catch (Exception ex) { }
         }
-		catch (Exception ex) { }
+		catch (Exception ex) { throw; }
 	}
 
     public async Task EditAsync<TDto>(string uri, TDto dto)
@@ -94,15 +68,12 @@ public class AdminService : IAdminService
                 Encoding.UTF8,
                 "application/json");
 
-
-            var response = await _http.Client.PutAsync(uri, jsonContent);
-            try
+            using (HttpResponseMessage response = await _http.Client.PutAsync(uri, jsonContent))
             {
                 response.EnsureSuccessStatusCode();
             }
-            catch (Exception ex) { }
         }
-        catch (Exception ex) { }
+        catch (Exception ex) { throw; }
     }
 
     public async Task DeleteAsync<TDto>(string uri)
@@ -110,13 +81,12 @@ public class AdminService : IAdminService
 
         try
         {
-            var response = await _http.Client.DeleteAsync(uri);
-            try
+            using (HttpResponseMessage response = await _http.Client.DeleteAsync(uri))
             {
                 response.EnsureSuccessStatusCode();
             }
-            catch (Exception ex) { }
         }
-        catch (Exception ex) { }
+        catch (Exception ex) { throw; }
     }
+
 }

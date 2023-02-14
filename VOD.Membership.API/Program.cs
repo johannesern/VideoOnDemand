@@ -1,3 +1,5 @@
+using VOD.Common.DTOs;
+
 namespace VOD.Membership.API;
 
 public class Program
@@ -82,7 +84,7 @@ public class Program
         });
         var mapper = config.CreateMapper();
 
-        //Singleton skapar ett globalt objekt anvädning
-        services.AddSingleton(mapper);
+            //Singleton skapar ett globalt objekt anvädning
+            services.AddSingleton(mapper);
     }
 }

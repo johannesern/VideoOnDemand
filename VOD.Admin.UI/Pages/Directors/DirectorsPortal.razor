@@ -1,49 +1,54 @@
 ﻿@inject IAdminService AdminService
+
 <h3>@Navigation</h3>
 
-@if(Alert != null || Alert != string.Empty)
+@if(Alert != string.Empty)
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show w-50" role="alert">
         <strong>@Alert</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
     </div>
 }
-<button type="button" href="/" class="btn btn-outline-secondary">Home</button>
-<button type="button" class="btn btn-outline-primary" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
-<button type="button" class="btn btn-outline-success" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
 
+<div class="d-flex me-1">
+    <a type="button" href="/" class="btn btn-outline-secondary rounded-0 me-1">Home</a>
+    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
+    <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
+</div>
 
+<DirectorsIndex OnClick="OnClick" Model="Model"></DirectorsIndex>
 
 @code {
     string Alert = string.Empty;
     string Navigation = PageType.Index;
-    List<DirectorDTO> Model = new();
+    List<DirectorDTO> Model { get; set; } = new();
 
     void ChangePageType(string pageType) => Navigation = pageType;    
 
     void CloseAlert() => Alert = string.Empty;
 
 
+
+
     protected override async Task OnInitializedAsync()
     {
-        Alert = "Test message";
+        //Alert = string.Empty;
 
-
-
-
-        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/3");
-
-        //Model = await AdminService.GetAsync<DirectorDTO>($"directors?freeOnly=false"); 
+        //Model = await AdminService.GetAsync<DirectorDTO>($"directors"); 
 
         //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
         //{
-        //    Name = "Joe Johnston"
+        //    Name = "Ingmar Bergman"
         //});
 
-        //await AdminService.EditAsync<DirectorEditDTO>($"directors/{test.Id}", new DirectorEditDTO{
+        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/5");
+
+        //await AdminService.EditAsync<DirectorEditDTO>($"directors/5", new DirectorEditDTO
+        //{
+        //    Id = 5,
         //    Name = "test nisse"
         //});
 
-        //await AdminService.DeleteAsync<DirectorDTO>($"directors/{test.Id}");
+        //await AdminService.DeleteAsync<DirectorDTO>($"directors/5");
     }
 }

@@ -9,8 +9,8 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
-			builder.Services.AddHttpClient<FilmsHttpClient>(client =>
-        client.BaseAddress = new Uri("https://localhost:5000/api/"));
+		builder.Services.AddHttpClient<FilmsHttpClient>(client =>
+            client.BaseAddress = new Uri("https://localhost:5000/api/"));
 
         builder.Services.AddScoped<IAdminService, AdminService>();
 
