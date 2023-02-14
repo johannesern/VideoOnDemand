@@ -5,34 +5,29 @@ namespace VOD.Common.Services;
 public class AdminService : IAdminService
 {
 	public readonly FilmsHttpClient _http;
-	public AdminService(FilmsHttpClient http)
-	{
-		_http = http;
-	}
+	public AdminService(FilmsHttpClient http) => _http = http;	
 
 	public async Task<List<TDto>> GetAsync<TDto>(string uri)
 	{
 		try
 		{
-			using (var response = await _http.Client.GetAsync(uri))
+            var response = await _http.Client.GetAsync(uri);
+			try
 			{
-				try
+				response.EnsureSuccessStatusCode();
+				var result = JsonSerializer.Deserialize<List<TDto>>(await
+				response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
 				{
-					response.EnsureSuccessStatusCode();
-					var result = JsonSerializer.Deserialize<List<TDto>>(await
-					response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
-					{
-						PropertyNameCaseInsensitive = true
-					});
-					if (result != null)
-						return result;
-					else
-						return null;
-				}
-				catch (Exception ex)
-				{
+					PropertyNameCaseInsensitive = true
+				});
+				if (result != null)
+					return result;
+				else
 					return null;
-				}
+			}
+			catch (Exception ex)
+			{
+				return null;
 			}
 		}
 		catch (Exception ex)
@@ -45,25 +40,23 @@ public class AdminService : IAdminService
     {
         try
         {
-            using (var response = await _http.Client.GetAsync(uri))
+            var response = await _http.Client.GetAsync(uri);
+            try
             {
-                try
+                response.EnsureSuccessStatusCode();
+                var result = JsonSerializer.Deserialize<TDto>(await
+                response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
                 {
-                    response.EnsureSuccessStatusCode();
-                    var result = JsonSerializer.Deserialize<TDto>(await
-                    response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                    if (result != null)
-                        return result;
-                    else
-                        return default;
-                }
-                catch (Exception ex)
-                {
+                    PropertyNameCaseInsensitive = true
+                });
+                if (result != null)
+                    return result;
+                else
                     return default;
-                }
+            }
+            catch (Exception ex)
+            {
+                return default;
             }
         }
         catch (Exception ex)
@@ -81,14 +74,12 @@ public class AdminService : IAdminService
 				Encoding.UTF8,
 				"application/json");
 
-			using (HttpResponseMessage response = await _http.Client.PostAsync(uri, jsonContent))
+            var response = await _http.Client.PostAsync(uri, jsonContent);
+            try
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();					
-                }
-                catch (Exception ex) { }
+                response.EnsureSuccessStatusCode();					
             }
+            catch (Exception ex) { }
         }
 		catch (Exception ex) { }
 	}
@@ -104,14 +95,12 @@ public class AdminService : IAdminService
                 "application/json");
 
 
-            using (HttpResponseMessage response = await _http.Client.PutAsync(uri, jsonContent))
+            var response = await _http.Client.PutAsync(uri, jsonContent);
+            try
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex) { }
+                response.EnsureSuccessStatusCode();
             }
+            catch (Exception ex) { }
         }
         catch (Exception ex) { }
     }
@@ -121,16 +110,13 @@ public class AdminService : IAdminService
 
         try
         {
-            using (HttpResponseMessage response = await _http.Client.DeleteAsync(uri))
+            var response = await _http.Client.DeleteAsync(uri);
+            try
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex) { }
+                response.EnsureSuccessStatusCode();
             }
+            catch (Exception ex) { }
         }
         catch (Exception ex) { }
     }
-
 }

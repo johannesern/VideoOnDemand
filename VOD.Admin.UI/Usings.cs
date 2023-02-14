@@ -4,3 +4,4 @@ global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;
 global using VOD.Common.DTOs;
 global using VOD.Common.Services;
+global using VOD.Common.Extensions;

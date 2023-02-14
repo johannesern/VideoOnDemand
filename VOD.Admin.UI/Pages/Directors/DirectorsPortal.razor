@@ -1,13 +1,18 @@
 ﻿@inject IAdminService AdminService
+<h3>@Navigation</h3>
+
 @if(Alert != null || Alert != string.Empty)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>@Alert</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
     </div>
-
 }
-<h3>DirectorsPortal</h3>
+<button type="button" href="/" class="btn btn-outline-secondary">Home</button>
+<button type="button" class="btn btn-outline-primary" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
+<button type="button" class="btn btn-outline-success" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
+
+
 
 @code {
     string Alert = string.Empty;
@@ -21,7 +26,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Alert = "blabla";
+        Alert = "Test message";
 
 
 
