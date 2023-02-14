@@ -1,4 +1,4 @@
-﻿@inject IAdminService AdminService
+﻿    @inject IAdminService AdminService
 
 <h3>@Navigation</h3>
 
@@ -16,6 +16,31 @@
     <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
 </div>
 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Films</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var item in Model)
+      {
+          <tr>
+              <th scope="row">@(item.Id)</th>
+              <td>@(item.Name)</td>
+                <td>@foreach(var film in item.Films)
+                    {
+                        <div>@film<br/></div>
+                    }
+                </td>
+          </tr>            
+        }
+    
+  </tbody>
+</table>
+
 <DirectorsIndex OnClick="OnClick" Model="Model"></DirectorsIndex>
 
 @code {
@@ -27,14 +52,17 @@
 
     void CloseAlert() => Alert = string.Empty;
 
-
+    async Task OnClick()
+    {
+        
+    }
 
 
     protected override async Task OnInitializedAsync()
     {
         //Alert = string.Empty;
 
-        //Model = await AdminService.GetAsync<DirectorDTO>($"directors"); 
+        Model = await AdminService.GetAsync<DirectorDTO>($"directors"); 
 
         //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
         //{

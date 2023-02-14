@@ -1,5 +1,89 @@
-﻿<h3>FilmsPortal</h3>
+﻿@inject IAdminService AdminService
+
+<h3>@Navigation</h3>
+
+@if (Alert != string.Empty)
+{
+        <div class="alert alert-danger alert-dismissible fade show w-50" role="alert">
+            <strong>@Alert</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
+        </div>
+}
+
+<div class="d-flex me-1">
+    <a type="button" href="/" class="btn btn-outline-secondary rounded-0 me-1">Home</a>
+    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
+    <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Free</th>
+      <th scope="col">Director</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@(item.Id)</th>
+                <td>@(item.Title)</td>
+                <td>@(item.Free?"Free":"")</td>
+                <td>@(item.Director)</td>
+                <td>@(StringExtensions.Truncate(50, item.Description))</td>
+                <td>
+                        <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="@(() => OnClick.InvokeAsync(new ClickModel(PageType.Edit,
+                            item.Id)))">Edit</button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="OnClick">Delete</button>
+                </td>
+            </tr>            
+        }
+  </tbody>
+</table>
+
+<FilmsIndex OnClick="OnClick" Model="Model"></FilmsIndex>
 
 @code {
+    string Alert = string.Empty;
+    string Navigation = PageType.Index;
+    List<FilmDTO> Model { get; set; } = new();
 
+    void ChangePageType(string pageType) => Navigation = pageType;
+
+    void CloseAlert() => Alert = string.Empty;
+
+    async Task OnClick(ClickModel model)
+    {
+        if (model.PageType.Equals(PageType.Edit) || model.PageType.Equals(PageType.Delete))
+            Model = await AdminService.SingleAsync<FilmDTO>($"films/{model.Id}") ?? new(); //KOLLA PÅ DETTA
+        ChangePageType(model.PageType);
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Alert = string.Empty;
+
+        Model = await AdminService.GetAsync<FilmDTO>($"films");
+
+        //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
+        //{
+        //    Name = "Ingmar Bergman"
+        //});
+
+        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/5");
+
+        //await AdminService.EditAsync<DirectorEditDTO>($"directors/5", new DirectorEditDTO
+        //{
+        //    Id = 5,
+        //    Name = "test nisse"
+        //});
+
+        //await AdminService.DeleteAsync<DirectorDTO>($"directors/5");
+    }
 }

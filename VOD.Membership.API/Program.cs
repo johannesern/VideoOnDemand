@@ -1,3 +1,4 @@
+using AutoMapper;
 using VOD.Common.DTOs;
 
 namespace VOD.Membership.API;
