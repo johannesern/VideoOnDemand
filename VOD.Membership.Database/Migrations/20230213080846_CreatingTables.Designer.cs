@@ -12,7 +12,7 @@ using VOD.Films.Database.Contexts;
 namespace VOD.Films.Database.Migrations
 {
     [DbContext(typeof(VODContext))]
-    [Migration("20230210130841_CreatingTables")]
+    [Migration("20230213080846_CreatingTables")]
     partial class CreatingTables
     {
         /// <inheritdoc />

@@ -10,7 +10,7 @@ public class DirectorDTO
 public class DirectorCreateDTO
 {
     public string? Name { get; set; }
-	public List<FilmDTO>? Films { get; set; }
+
 }
 
 public class DirectorEditDTO : DirectorCreateDTO

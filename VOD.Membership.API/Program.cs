@@ -64,7 +64,6 @@ public class Program
             cfg.CreateMap<FilmEditDTO, Film>();
 
             cfg.CreateMap<Genre, GenreDTO>()
-            .ForMember(dest => dest.Films, src => src.MapFrom(s => s.Films.Select(y => y.Title)))
             .ReverseMap();
 			cfg.CreateMap<GenreCreateDTO, Genre>();
 			cfg.CreateMap<GenreEditDTO, Genre>();
@@ -79,6 +78,7 @@ public class Program
             cfg.CreateMap<FilmGenre, FilmGenreDTO>().ReverseMap();
 
             cfg.CreateMap<SimilarFilm, SimilarFilmsDTO>().ReverseMap();
+            cfg.CreateMap<SimilarFilmsCreateDTO, SimilarFilm>();
         });
         var mapper = config.CreateMapper();
 

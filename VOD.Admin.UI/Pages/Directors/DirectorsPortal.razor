@@ -1,5 +1,44 @@
-﻿<h3>DirectorsPortal</h3>
+﻿@inject IAdminService AdminService
+@if(Alert != null || Alert != string.Empty)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@Alert</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}
+<h3>DirectorsPortal</h3>
 
 @code {
+    string Alert = string.Empty;
+    string Navigation = PageType.Index;
+    List<DirectorDTO> Model = new();
 
+    void ChangePageType(string pageType) => Navigation = pageType;    
+
+    void CloseAlert() => Alert = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Alert = "blabla";
+
+
+
+
+        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/3");
+
+        //Model = await AdminService.GetAsync<DirectorDTO>($"directors?freeOnly=false"); 
+
+        //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
+        //{
+        //    Name = "Joe Johnston"
+        //});
+
+        //await AdminService.EditAsync<DirectorEditDTO>($"directors/{test.Id}", new DirectorEditDTO{
+        //    Name = "test nisse"
+        //});
+
+        //await AdminService.DeleteAsync<DirectorDTO>($"directors/{test.Id}");
+    }
 }

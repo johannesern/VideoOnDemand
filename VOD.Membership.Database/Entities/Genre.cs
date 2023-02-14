@@ -2,10 +2,10 @@
     
 public class Genre : IEntity
 {
-    public Genre()
-    {
-        Films = new HashSet<Film>();
-    }
+    //public Genre()
+    //{
+    //    Films = new HashSet<Film>();
+    //}
     public int Id { get; set; }
     [MaxLength(50), Required]
     public string? Name { get; set; }
