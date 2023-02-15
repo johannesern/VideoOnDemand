@@ -1,4 +1,39 @@
 ﻿
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Free</th>
+            <th scope="col">Director</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@(item.Id)</th>
+                <td>@(item.Title)</td>
+                <td>@(item.Free ? "Free" : "")</td>
+                <td>@(item.Director)</td>
+                <td>@(StringExtensions.Truncate(50, item.Description))</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(new ClickModel(PageType.Edit,
+                            item.Id)))">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(new ClickModel(PageType.Delete,
+                            item.Id)))">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 @code {
     [Parameter] public List<FilmDTO> Model { get; set; }
     [Parameter] public EventCallback<ClickModel> OnClick { get; set; }

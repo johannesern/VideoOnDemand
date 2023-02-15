@@ -1,0 +1,52 @@
+﻿@inject IAdminService AdminService
+
+<form class="d-flex justify-content-center">
+    <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
+        <h4>@Page Film</h4>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText id="title" @bind-Value="Model.Title"></InputText>
+        <InputText id="description" @bind-Value="Model.Description"></InputText>
+        <InputText id="thumbnailURL" @bind-Value="Model.ThumbnailURL"></InputText>
+        <InputText id="filmURL" @bind-Value="Model.FilmUrl"></InputText>
+        <InputSelect id="selectDirector" @bind-Value="Directors"></InputSelect>
+        <InputCheckbox id="free" @bind-Value="Model.Free"></InputCheckbox>
+
+        <button type="submit">Submit</button>
+
+    </EditForm>
+</form>
+
+@code {
+    [Parameter] public FilmDTO Model { get; set; }
+    [Parameter] public string Page { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> OnChange { get; set; }
+    List<DirectorDTO> Directors = new();
+
+    private async Task OnFormSubmit()
+    {
+        try
+        {
+            if(Page == PageType.Create)            
+                await AdminService.CreateAsync<FilmDTO>("films", Model);            
+
+            else if(Page == PageType.Edit)            
+                await AdminService.EditAsync<FilmDTO>($"films/{Model.Id}", Model);
+
+            else if(Page == PageType.Delete)            
+                await AdminService.DeleteAsync<FilmDTO>($"films/{Model.Id}");
+
+            await OnChange.InvokeAsync("Sucess!");
+        }
+        catch(Exception ex)
+        {
+            await OnChange.InvokeAsync("Couldn't create/edit/delete the course.");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Directors = await AdminService.GetAsync<DirectorDTO>($"directors");
+    }
+}
