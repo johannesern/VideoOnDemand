@@ -10,6 +10,15 @@
     </div>
 }
 
+@if (Navigation == PageType.Create)
+{
+   <ChangeFilm Page="@Navigation" OnChange="OnChange"></ChangeFilm>
+}
+@if (Navigation == PageType.Edit || Navigation == PageType.Delete)
+{
+   <ChangeFilm Page="@Navigation" OnChange="OnChange" Model="Film"></ChangeFilm>
+}
+
 <div class="d-flex me-1">
     <a type="button" href="/" class="btn btn-outline-secondary rounded-0 me-1">Home</a>
     <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
@@ -22,7 +31,7 @@
     string Alert = string.Empty;
     string Navigation = PageType.Index;
     List<FilmDTO> Model { get; set; } = new();
-    FilmDTO FilmDTO = new();        //Denna jobbar du med
+    FilmDTO Film = new();
 
     void ChangePageType(string pageType) => Navigation = pageType;
 
@@ -34,23 +43,18 @@
         {
             try
             {
-                var result = await AdminService.SingleAsync<FilmDTO>($"films/{model.Id}");                
-                if (result != null) { Model.Add(result); }
-                else{ Alert = "No result."; }
+                Film = await AdminService.SingleAsync<FilmDTO>($"films/{model.Id}");                
             }
-            catch(Exception ex){}
+            catch { Alert = "No result."; }
         }
         ChangePageType(model.PageType);
     }
 
     async Task OnChange(string alert)           //OCH DENNA
     {
-        try
-        {
-            Model = await AdminService.GetAsync<FilmDTO>($"films");
-            ChangePageType(PageType.Index);
-        }
-        catch { Alert = alert; }
+        Alert = alert;
+        Model = await AdminService.GetAsync<FilmDTO>($"films");
+        ChangePageType(PageType.Index);
     }
 
     protected override async Task OnInitializedAsync()
