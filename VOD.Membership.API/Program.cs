@@ -1,7 +1,4 @@
-using AutoMapper;
-using VOD.Common.DTOs;
-
-namespace VOD.Membership.API;
+namespace VOD.Films.API; //Membership?
 
 public class Program
 {
@@ -61,6 +58,7 @@ public class Program
             .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
             .ForMember(dest => dest.Genres, src => src.MapFrom(s => s.Genres.Select(y => y.Name).ToList()))
             .ForMember(dest => dest.Similar, src => src.MapFrom(s => s.SimilarFilms.Select(y => y.Similar.Title)))
+            .ForMember(dest => dest.Released, src => src.MapFrom(s => s.Released.ToString()))
             .ReverseMap()
             .ForMember(dest => dest.Director, src => src.Ignore());
 			cfg.CreateMap<FilmCreateDTO, Film>();			

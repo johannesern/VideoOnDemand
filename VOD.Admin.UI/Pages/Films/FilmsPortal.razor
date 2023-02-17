@@ -50,7 +50,7 @@
         ChangePageType(model.PageType);
     }
 
-    async Task OnChange(string alert)           //OCH DENNA
+    async Task OnChange(string alert)
     {
         Alert = alert;
         Model = await AdminService.GetAsync<FilmDTO>($"films");
@@ -62,20 +62,5 @@
         Alert = string.Empty;
 
         Model = await AdminService.GetAsync<FilmDTO>($"films");
-
-        //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
-        //{
-        //    Name = "Ingmar Bergman"
-        //});
-
-        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/5");
-
-        //await AdminService.EditAsync<DirectorEditDTO>($"directors/5", new DirectorEditDTO
-        //{
-        //    Id = 5,
-        //    Name = "test nisse"
-        //});
-
-        //await AdminService.DeleteAsync<DirectorDTO>($"directors/5");
     }
 }

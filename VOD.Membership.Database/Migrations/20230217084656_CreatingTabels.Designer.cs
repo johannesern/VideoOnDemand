@@ -12,8 +12,8 @@ using VOD.Films.Database.Contexts;
 namespace VOD.Films.Database.Migrations
 {
     [DbContext(typeof(VODContext))]
-    [Migration("20230214134341_CreatingTables")]
-    partial class CreatingTables
+    [Migration("20230217084656_CreatingTabels")]
+    partial class CreatingTabels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

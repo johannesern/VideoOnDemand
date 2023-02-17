@@ -1,13 +1,22 @@
-﻿    @inject IAdminService AdminService
+﻿@inject IAdminService AdminService
 
 <h3>@Navigation</h3>
 
-@if(Alert != string.Empty)
+@if (Alert != string.Empty)
 {
     <div class="alert alert-danger alert-dismissible fade show w-50" role="alert">
         <strong>@Alert</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
     </div>
+}
+
+@if (Navigation == PageType.Create)
+{
+    <ChangeDirector Page="@Navigation" OnChange="OnChange"></ChangeDirector>
+}
+@if (Navigation == PageType.Edit || Navigation == PageType.Delete)
+{
+    <ChangeDirector Page="@Navigation" OnChange="OnChange" Model="Director"></ChangeDirector>
 }
 
 <div class="d-flex me-1">
@@ -16,67 +25,42 @@
     <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
 </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Films</th>
-    </tr>
-  </thead>
-  <tbody>
-      @foreach(var item in Model)
-      {
-          <tr>
-              <th scope="row">@(item.Id)</th>
-              <td>@(item.Name)</td>
-                <td>@foreach(var film in item.Films)
-                    {
-                        <div>@film<br/></div>
-                    }
-                </td>
-          </tr>            
-        }
-    
-  </tbody>
-</table>
-
 <DirectorsIndex OnClick="OnClick" Model="Model"></DirectorsIndex>
 
 @code {
     string Alert = string.Empty;
     string Navigation = PageType.Index;
     List<DirectorDTO> Model { get; set; } = new();
+    DirectorDTO Director = new();
 
-    void ChangePageType(string pageType) => Navigation = pageType;    
+    void ChangePageType(string pageType) => Navigation = pageType;
 
     void CloseAlert() => Alert = string.Empty;
 
-    async Task OnClick()
+    async Task OnClick(ClickModel model)
     {
-        
+        if (model.PageType.Equals(PageType.Edit) || model.PageType.Equals(PageType.Delete))
+        {
+            try
+            {
+                Director = await AdminService.SingleAsync<DirectorDTO>($"directors/{model.Id}");
+            }
+            catch { Alert = "No result."; }
+        }
+        ChangePageType(model.PageType);
     }
 
+    async Task OnChange(string alert)
+    {
+        Alert = alert;
+        Model = await AdminService.GetAsync<DirectorDTO>($"directors");
+        ChangePageType(PageType.Index);
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        //Alert = string.Empty;
+        Alert = string.Empty;
 
-        Model = await AdminService.GetAsync<DirectorDTO>($"directors"); 
-
-        //await AdminService.CreateAsync<DirectorDTO>("directors", new DirectorDTO
-        //{
-        //    Name = "Ingmar Bergman"
-        //});
-
-        //var test = await AdminService.SingleAsync<DirectorDTO>($"directors/5");
-
-        //await AdminService.EditAsync<DirectorEditDTO>($"directors/5", new DirectorEditDTO
-        //{
-        //    Id = 5,
-        //    Name = "test nisse"
-        //});
-
-        //await AdminService.DeleteAsync<DirectorDTO>($"directors/5");
+        Model = await AdminService.GetAsync<DirectorDTO>($"directors");
     }
 }

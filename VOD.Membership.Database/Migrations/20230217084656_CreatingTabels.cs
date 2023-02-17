@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VOD.Films.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingTables : Migration
+    public partial class CreatingTabels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

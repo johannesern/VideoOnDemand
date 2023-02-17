@@ -1,66 +1,82 @@
 ﻿@inject IAdminService AdminService
 
-<form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
-    <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
-        <DataAnnotationsValidator />
-        <h4>@Page Film</h4>
-        <div class="mb-3">
-            @if (Page.Equals(PageType.Delete))
-            {
-                <InputText id="title" @bind-Value="Model.Title" disabled placeholder="Title" ></InputText>
-                
-            }
-            else
-            {
-                <InputText id="title" @bind-Value="Model.Title" placeholder="Title"></InputText>
-            }
-        </div>
-        <ValidationMessage For="@(() => Model.Title)"/>
-        @if (!Page.Equals(PageType.Delete))
-        {            
+<div class="d-flex justify-content-center">
+    <form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
+        <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
+            <DataAnnotationsValidator />
+            <h4>@Page Film</h4>
             <div>
-                <InputText id="description" class="form-control" @bind-Value="Model.Description"></InputText>
+                @if (Page.Equals(PageType.Delete))
+                {
+                    <InputText id="title" class="form-control mb-1" @bind-Value="Model.Title" disabled placeholder="Title"></InputText>
+                }
+                else
+                {
+                    <InputText id="title" class="form-control mb-1" @bind-Value="Model.Title" placeholder="Title"></InputText>
+                }
             </div>
-            <ValidationMessage For="@(() => Model.Description)" />
+            <ValidationMessage For="@(() => Model.Title)"/>
+            @if (!Page.Equals(PageType.Delete))
+            {            
+                <div>
+                    <InputText id="description" class="form-control mb-1" @bind-Value="Model.Description" placeholder="Description"></InputText>
+                </div>
+                <ValidationMessage For="@(() => Model.Description)" />
 
-            <div>
-                <InputText id="thumbnailURL" @bind-Value="Model.ThumbnailURL"></InputText>
-            </div>
-            <ValidationMessage For="@(() => Model.ThumbnailURL)" />
+                <div>
+                    <InputText id="description" class="form-control mb-1" @bind-Value="Model.Released" placeholder="Description"></InputText>
+                </div>
+                <ValidationMessage For="@(() => Model.Description)" />
 
-            <div>
-                <InputText id="filmURL" @bind-Value="Model.FilmUrl"></InputText>
-            </div>
-            <ValidationMessage For="@(() => Model.FilmUrl)"/>
+                <div>
+                    <InputText id="thumbnailURL" class="form-control mb-1" @bind-Value="Model.ThumbnailURL" placeholder="ThumbnailURL"></InputText>
+                </div>
+                <ValidationMessage For="@(() => Model.ThumbnailURL)" />
 
-            <div>
-                <InputSelect id="selectDirector" @bind-Value="Model.DirectorId">
-                    <option value=0>Director...</option>
-                    @foreach(var director in Directors)
-                    {
-                        <option value="@director.Id">@director.Name</option>
-                    }
-                </InputSelect>
-            </div>
+                <div>
+                    <InputText id="filmURL" class="form-control mb-1" @bind-Value="Model.FilmUrl" placeholder="FilmURL"></InputText>
+                </div>
+                <ValidationMessage For="@(() => Model.FilmUrl)"/>
+
+                <div>
+                    <InputSelect id="selectDirector" class="form-control mb-1" @bind-Value="Model.DirectorId">
+                        <option value=0>Director...</option>
+                        @foreach(var director in Directors)
+                        {
+                            <option value="@director.Id">@director.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                @*<div>
+                    <InputSelect id="selectGenre" class="form-control mb-1" @bind-Value="Model.Genres">
+                        <option value=0>Genre...</option>
+                        @foreach(var genre in Genres)
+                        {                            
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    </InputSelect>
+                </div>*@
             
+                <div>
+                    <label>
+                        <InputCheckbox @bind-Value="Model.Free"></InputCheckbox>
+                        Free to watch
+                    </label>
+                </div>
+            }
             <div>
-                <label>
-                    <InputCheckbox @bind-Value="Model.Free"></InputCheckbox>
-                    Free to watch
-                </label>
+                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page film</button>
             </div>
-            <div>
-                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0">Submit</button>
-            </div>
-        }
-    </EditForm>
-</form>
-
+        </EditForm>
+    </form>
+</div>
 @code {
     [Parameter] public FilmDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
     List<DirectorDTO> Directors = new();
+    List<GenreDTO> Genres = new();
 
     private async Task OnFormSubmit()
     {
@@ -86,5 +102,6 @@
     protected override async Task OnInitializedAsync()
     {
         Directors = await AdminService.GetAsync<DirectorDTO>($"directors");
-    }
+        Genres = await AdminService.GetAsync<GenreDTO>($"genres");
+    }  
 }
