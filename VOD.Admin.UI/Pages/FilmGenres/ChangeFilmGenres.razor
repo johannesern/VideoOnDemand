@@ -1,5 +1,57 @@
-﻿<h3>ChangeFilmGenres</h3>
+﻿@inject IAdminService AdminService
 
+<div class="d-flex justify-content-center">
+    <form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
+        <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">        @*DU SKA SKICKA TVÅ IDN TILL CONTROLLERN*@
+            <DataAnnotationsValidator />
+            <h4>@Page Director</h4>
+            <div>
+                @if (Page.Equals(PageType.Delete))
+                {
+                    <InputNumber id="filmId" class="" @bind-Value="Model.FilmId" disabled placeholder="FilmID"></InputNumber>
+                    <InputNumber id="genreId" class="" @bind-Value="Model.GenreId" disabled placeholder="GenreID"></InputNumber>
+                }
+                else
+                {
+                    <InputNumber id="filmId" class="" @bind-Value="Model.FilmId" disabled placeholder="FilmID"></InputNumber>
+                    <InputNumber id="genreId" class="" @bind-Value="Model.GenreId" disabled placeholder="GenreID"></InputNumber>
+                }
+            </div>
+            <ValidationMessage For="@(() => Model.FilmId)" />
+            <ValidationMessage For="@(() => Model.GenreId)" />
+
+            <div>
+                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page FilmGenre</button>
+            </div>
+        </EditForm>
+    </form>
+</div>
 @code {
+    [Parameter] public FilmGenreDTO Model { get; set; } = new();
+    [Parameter] public string Page { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> OnChange { get; set; }
+    List<FilmGenreDTO> FilmGenres = new();
 
+    private async Task OnFormSubmit()
+    {
+        try
+        {
+            if (Page == PageType.Create)
+                await AdminService.CreateAsync<FilmGenreDTO>("filmgenres", Model);
+
+            else if (Page == PageType.Delete)
+                await AdminService.DeleteAsync<FilmGenreDTO>($"filmgenres/{Model}");
+
+            await OnChange.InvokeAsync("");
+        }
+        catch
+        {
+            await OnChange.InvokeAsync("Couldn't create/edit/delete the course.");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        FilmGenres = await AdminService.GetAsync<FilmGenreDTO>($"filmgenres");
+    }
 }

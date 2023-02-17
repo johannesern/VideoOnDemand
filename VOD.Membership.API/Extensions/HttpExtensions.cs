@@ -79,6 +79,52 @@ public static class HttpExtensions
         return Results.Ok();
     }
 
+    // Kopplingstabeller
+    public static async Task<IResult> HttpGetReferenceAsync<TReferenceEntity, TDto>(this IDbService db)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        var entities = await db.GetReferenceAsync<TReferenceEntity, TDto>();
+        return Results.Ok(entities);
+    }
+
+    public static async Task<IResult> HttpPostReferenceAsync<TReferenceEntity, TDto>(this IDbService db, TDto dto)
+            where TReferenceEntity : class, IReferenceEntity
+            where TDto : class
+    {
+        try
+        {
+            var entity = await db.AddReferenceAsync<TReferenceEntity, TDto>(dto);
+            if (await db.SaveChangesAsync())
+            {
+                var node = typeof(TReferenceEntity).Name.ToLower();
+                return Results.Ok();
+            }
+
+            return Results.Created("api/filmgenres", entity);
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest($"Couldn't add the {typeof(TReferenceEntity).Name} entity.\n{ex}.");
+        }
+    }
+
+    public static async Task<IResult> HttpDeleteReferenceAsync<TReferenceEntity, TDto>(this IDbService db, TDto dto)
+            where TReferenceEntity : class, IReferenceEntity
+            where TDto : class
+    {
+        try
+        {
+            if (!db.DeleteReference<TReferenceEntity, TDto>(dto)) { return Results.NotFound(); }
+
+            if (await db.SaveChangesAsync()) return Results.NoContent();
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest($"Couldn't delete the {typeof(TReferenceEntity).Name} entity.\n{ex}.");
+        }
+        return Results.Ok();
+    }
     //public static GetURI se OneNote för implementering
-    
+
 }

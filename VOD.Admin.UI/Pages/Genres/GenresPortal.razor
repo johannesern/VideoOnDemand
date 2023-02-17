@@ -1,5 +1,66 @@
-﻿<h3>GenrePortal</h3>
+﻿@inject IAdminService AdminService
+
+<h3>@Navigation</h3>
+
+@if (Alert != string.Empty)
+{
+    <div class="alert alert-danger alert-dismissible fade show w-50" role="alert">
+        <strong>@Alert</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
+    </div>
+}
+
+@if (Navigation == PageType.Create)
+{
+    <ChangeDirector Page="@Navigation" OnChange="OnChange"></ChangeDirector>
+}
+@if (Navigation == PageType.Edit || Navigation == PageType.Delete)
+{
+    <ChangeDirector Page="@Navigation" OnChange="OnChange" Model="Director"></ChangeDirector>
+}
+
+<div class="d-flex me-1">
+    <a type="button" href="/" class="btn btn-outline-secondary rounded-0 me-1">Home</a>
+    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
+    <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
+</div>
+
+<DirectorsIndex OnClick="OnClick" Model="Model"></DirectorsIndex>
 
 @code {
+    string Alert = string.Empty;
+    string Navigation = PageType.Index;
+    List<DirectorDTO> Model { get; set; } = new();
+    DirectorDTO Director = new();
 
+    void ChangePageType(string pageType) => Navigation = pageType;
+
+    void CloseAlert() => Alert = string.Empty;
+
+    async Task OnClick(ClickModel model)
+    {
+        if (model.PageType.Equals(PageType.Edit) || model.PageType.Equals(PageType.Delete))
+        {
+            try
+            {
+                Director = await AdminService.SingleAsync<DirectorDTO>($"directors/{model.Id}");
+            }
+            catch { Alert = "No result."; }
+        }
+        ChangePageType(model.PageType);
+    }
+
+    async Task OnChange(string alert)
+    {
+        Alert = alert;
+        Model = await AdminService.GetAsync<DirectorDTO>($"directors");
+        ChangePageType(PageType.Index);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Alert = string.Empty;
+
+        Model = await AdminService.GetAsync<DirectorDTO>($"directors");
+    }
 }

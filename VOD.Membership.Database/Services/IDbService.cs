@@ -31,11 +31,19 @@ public interface IDbService
 
     Task<bool> SaveChangesAsync();
 
-    //Kopplingstabeller
-		Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
-			where TReferenceEntity : class, IReferenceEntity
-			where TDto : class;
+    //Referencetables
+    Task<List<TDto>> GetReferenceAsync<TReferenceEntity, TDto>()
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class;
 
-		Task IncludeReferenceAsync<TReferenceEntity>()
-        where TReferenceEntity : class, IReferenceEntity;
-	}
+	Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
+		where TReferenceEntity : class, IReferenceEntity
+		where TDto : class;
+
+	Task IncludeReferenceAsync<TReferenceEntity>()
+    where TReferenceEntity : class, IReferenceEntity;
+
+    bool DeleteReference<TReferenceEntity, TDto>(TDto dto)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class;
+}

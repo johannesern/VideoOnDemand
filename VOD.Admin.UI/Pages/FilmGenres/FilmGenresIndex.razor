@@ -2,11 +2,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Free</th>
-            <th scope="col">Director</th>
-            <th scope="col">Description</th>
+            <th scope="col">FilmID</th>
+            <th scope="col">GenreID</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -17,12 +14,12 @@
                 <td>@(item.FilmId)</td>
                 <td>@(item.GenreId)</td>
                 <td>
-                    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Edit,
-                            item.FilmId, item.GenreId)))">
+                    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @*@onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Edit,
+                            item.FilmId, item.GenreId)))*@">
                         Edit
                     </button>
-                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Delete,
-                            item.FilmId, item.GenreId)))">
+                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @*@onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Delete,
+                            item.FilmId, item.GenreId)))*@">
                         Delete
                     </button>
                 </td>
@@ -33,5 +30,4 @@
 
 @code {
     [Parameter] public List<FilmGenreDTO> Model { get; set; }
-    [Parameter] public EventCallback<ClickRefModel> OnClick { get; set; }
 }

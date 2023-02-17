@@ -12,29 +12,23 @@ namespace VOD.Films.API.Controllers
 
 		public FilmGenresController(IDbService db) => _db = db;
 
-		// GET: api/<SimilarFilmsController>
-		//[HttpGet]
-		//public async Task<IResult> Get()
-		//{
-		//Här ska in en turnery eller if sats gällande fria filmer eller ej
-		//try
-		//{
-		//	return await _db.HttpGetAsync<Director, DirectorDTO>();
-		//}
-		//catch (Exception ex) { }
-		//return Results.BadRequest();
-		//}
+		//GET: api/<FilmGenresController>
+		[HttpGet]
+		public async Task<IResult> Get()
+		{
+			try
+			{
+				return await _db.HttpGetReferenceAsync<FilmGenre, FilmGenreDTO>();
+			}
+			catch {	}
+			return Results.BadRequest();
+		}
 
-		// GET api/<SimilarFilmsController>/5
-		//[HttpGet("{id}")]
-		//public async Task<IResult> Get(int id) =>
-		//		await _db.HttpGetAsync<Director, DirectorDTO>(id);
-
-		// POST api/<SimilarFilmsController>
-		[HttpPost]
+        // POST api/<FilmGenresController>
+        [HttpPost]
 		public async Task<IResult> Post([FromBody] FilmGenreDTO dto)
 		{
-			var result = await _db.AddReferenceAsync<FilmGenre, FilmGenreDTO>(dto);
+			var result = await _db.HttpPostReferenceAsync<FilmGenre, FilmGenreDTO>(dto);
 			if (result != null)
 			{
 				await _db.SaveChangesAsync();
@@ -47,15 +41,9 @@ namespace VOD.Films.API.Controllers
 
 		}
 
-
-		// PUT api/<SimilarFilmsController>/5
-		//[HttpPut("{id}")]
-		//public async Task<IResult> Put(int id, [FromBody] DirectorEditDTO dto) =>
-		//		await _db.HttpPutAsync<Director, DirectorEditDTO>(dto, id);
-
-		//// DELETE api/<SimilarFilmsController>/5
-		//[HttpDelete("{id}")]
-		//public async Task<IResult> Delete(int id) =>
-		//		await _db.HttpDeleteAsync<Director>(id);
-	}
+		// DELETE api/<FilmGenresController>/5                       TA EMOT TVÅ IDN OCH FIXA
+		[HttpDelete("{id}")]
+        public async Task<IResult> Delete(FilmGenreDTO dto) =>
+            await _db.HttpDeleteReferenceAsync<FilmGenre, FilmGenreDTO>(dto);
+    }
 }

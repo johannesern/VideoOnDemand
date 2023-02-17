@@ -95,19 +95,42 @@ public class DbService : IDbService
         }
     }
 
-		//Kopplingstabeller
+    //Kopplingstabeller
 
-		public async Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
-			 where TReferenceEntity : class, IReferenceEntity
-			 where TDto : class
-		{
-			var entity = _mapper.Map<TReferenceEntity>(dto);
-			await _db.Set<TReferenceEntity>().AddAsync(entity);
-			return entity;
-		}
-
-		public async Task IncludeReferenceAsync<TReferenceEntity>()
+    public async Task<List<TDto>> GetReferenceAsync<TReferenceEntity, TDto>()
         where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        var entities = await _db.Set<TReferenceEntity>().ToListAsync();
+        return _mapper.Map<List<TDto>>(entities);
+    }
+
+    public async Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
+		where TReferenceEntity : class, IReferenceEntity
+		where TDto : class
+	{
+		var entity = _mapper.Map<TReferenceEntity>(dto);
+		await _db.Set<TReferenceEntity>().AddAsync(entity);
+		return entity;
+	}
+
+    public bool DeleteReference<TReferenceEntity, TDto>(TDto dto)
+            where TReferenceEntity : class, IReferenceEntity
+            where TDto : class
+    {
+        try
+        {
+            var entity = _mapper.Map<TReferenceEntity>(dto);
+            if (entity == null) { return false; }
+            _db.Remove(entity);
+        }
+        catch { throw; }
+
+        return true;
+    }
+
+    public async Task IncludeReferenceAsync<TReferenceEntity>()
+    where TReferenceEntity : class, IReferenceEntity
     {
         for (int i = 0; i < 1; i++)
         {
