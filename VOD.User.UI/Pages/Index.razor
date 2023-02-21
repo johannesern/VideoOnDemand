@@ -1,18 +1,19 @@
 ﻿@inject IUserService userService
 @page "/"
 
-
 <PageTitle>Dashboard</PageTitle>
 
-<div class="d-flex justify-content-center">
-    <h1>Dashboard</h1>
+<h1 class="d-flex justify-content-center">Dashboard</h1>
+
+<div class="d-flex justify-content-between">
+    @foreach(var film in Films)
+    {
+        <FilmCard Film="@film"/>
+    }
 </div>
 
-<FilmCard Model="Films"></FilmCard>    
-
-
 @code{
-    List<FilmDTO> Films { get; set; }
+    List<FilmDTO> Films { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,6 +1,13 @@
-﻿@page "/film/{Id:int}"
+﻿@inject IUserService userService
+@page "/film/{Id:int}"
 <h3>Film</h3>
 
 @code {
-    [Parameter] public int? Id { get; set; } 
+    [Parameter] public int? Id { get; set; }
+    public FilmDTO Model { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await userService.GetFilmAsync(Id);
+    }
 }

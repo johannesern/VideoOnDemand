@@ -1,16 +1,16 @@
-﻿<h3>FilmCard</h3>
+﻿
 
-    <div class="card" style="width: 18rem;">
-      <img src="@film.ThumbnailURL" class="card-img-top" alt="thumbnail of film">
-      <div class="card-body">
-        <h5 class="card-title">@film.Title</h5>
-        <p class="card-text">@film.Description</p>
-        <a href="@film.FilmUrl" class="btn btn-primary">Watch trailer!</a>
-      </div>
-    </div>    
+<div class="card m-2" style="width: 18rem;">
+    <img src="images/@Film.ThumbnailURL" class="card-img-top" alt="Film Thumbnail">
+    <div class="card-body">
+        <h5 class="card-title">@Film.Title</h5>
+        <p class="card-text">@Film.Description</p>
+        <a href="Film/@Film.Id" class="btn btn-primary">Watch trailer!</a>
+    </div>
+</div>    
 
 
 @code {
-    [Parameter] public List<FilmDTO> Model { get; set; }
+    [Parameter] public FilmDTO Film { get; set; } = new();
 
 }
