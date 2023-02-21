@@ -27,20 +27,19 @@
     [Parameter] public GenreDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
-    List<FilmDTO> Films = new();
 
     private async Task OnFormSubmit()
     {
         try
         {
             if (Page == PageType.Create)
-                await AdminService.CreateAsync<GenreDTO>("directors", Model);
+                await AdminService.CreateAsync<GenreDTO>("genres", Model);
 
             else if (Page == PageType.Edit)
-                await AdminService.EditAsync<GenreDTO>($"directors/{Model.Id}", Model);
+                await AdminService.EditAsync<GenreDTO>($"genres/{Model.Id}", Model);
 
             else if (Page == PageType.Delete)
-                await AdminService.DeleteAsync<GenreDTO>($"directors/{Model.Id}");
+                await AdminService.DeleteAsync<GenreDTO>($"genres/{Model.Id}");
 
             await OnChange.InvokeAsync("");
         }
@@ -48,10 +47,5 @@
         {
             await OnChange.InvokeAsync("Couldn't create/edit/delete the course.");
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Films = await AdminService.GetAsync<FilmDTO>($"films");
     }
 }

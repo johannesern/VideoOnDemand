@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http.Json;
+using System.Text;
 
 namespace VOD.Common.Services;
 
@@ -16,7 +17,7 @@ public class AdminService : IAdminService
 
 			var result = JsonSerializer.Deserialize<List<TDto>>(await
 			response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
-			    { PropertyNameCaseInsensitive = true }); //Matchar ihop props oavsett camelCase, PascalCase eller snakecase
+			    { PropertyNameCaseInsensitive = true }); 
 		
             return result ?? new List<TDto>();
 		}
@@ -85,6 +86,19 @@ public class AdminService : IAdminService
             {
                 response.EnsureSuccessStatusCode();
             }
+        }
+        catch (Exception ex) { throw; }
+    }
+    public async Task DeleteRefAsync<TDto>(string uri, TDto dto)
+    {
+
+        try
+        {
+            var message = new HttpRequestMessage(HttpMethod.Delete, uri);
+            message.Content = JsonContent.Create(dto);
+            using var response = await _http.Client.SendAsync(message);
+            response.EnsureSuccessStatusCode();
+            message.Dispose();
         }
         catch (Exception ex) { throw; }
     }

@@ -1,5 +1,66 @@
-﻿<h3>SimilarFilmsPortal</h3>
+﻿@inject IAdminService AdminService
+
+<h3>@Navigation</h3>
+
+@if (Alert != string.Empty)
+{
+    <div class="alert alert-danger alert-dismissible fade show w-50" role="alert">
+        <strong>@Alert</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="CloseAlert"></button>
+    </div>
+}
+
+@if (Navigation == PageType.Create)
+{
+    <ChangeSimilarFilm Page="@Navigation" OnChange="OnChange"></ChangeSimilarFilm>
+}
+@if (Navigation == PageType.Edit || Navigation == PageType.Delete)
+{
+    <ChangeSimilarFilm Page="@Navigation" OnChange="OnChange" Model="SimilarFilm"></ChangeSimilarFilm>
+}
+
+<div class="d-flex me-1">
+    <a type="button" href="/" class="btn btn-outline-secondary rounded-0 me-1">Home</a>
+    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="()=>ChangePageType(PageType.Index)">Index</button>
+    <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
+</div>
+
+<SimilarFilmsIndex OnClick="OnClick" Model="Model"></SimilarFilmsIndex>
 
 @code {
+    string Alert = string.Empty;
+    string Navigation = PageType.Index;
+    List<SimilarFilmsDTO> Model { get; set; } = new();
+    SimilarFilmsDTO SimilarFilm = new();
 
+    void ChangePageType(string pageType) => Navigation = pageType;
+
+    void CloseAlert() => Alert = string.Empty;
+
+    async Task OnClick(ClickRefModel<SimilarFilmsDTO> model)
+    {
+        if (model.PageType.Equals(PageType.Edit) || model.PageType.Equals(PageType.Delete))
+        {
+            try
+            {
+                SimilarFilm = model.dto;
+            }
+            catch { Alert = "No result."; }
+        }
+        ChangePageType(model.PageType);
+    }
+
+    async Task OnChange(string alert)
+    {
+        Alert = alert;
+        Model = await AdminService.GetAsync<SimilarFilmsDTO>($"similarfilms");
+        ChangePageType(PageType.Index);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Alert = string.Empty;
+
+        Model = await AdminService.GetAsync<SimilarFilmsDTO>($"similarfilms");
+    }
 }

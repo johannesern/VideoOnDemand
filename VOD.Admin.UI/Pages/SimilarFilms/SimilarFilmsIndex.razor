@@ -1,9 +1,8 @@
-﻿@using VOD.Common.DTOs;
-<table class="table">
+﻿<table class="table">
     <thead>
         <tr>
             <th scope="col">FilmID</th>
-            <th scope="col">GenreID</th>
+            <th scope="col">SimilarFilmID</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -12,10 +11,10 @@
         {
             <tr>
                 <th scope="row">@(item.FilmId)</th>
-                <td>@(item.GenreId)</td>
+                <td>@(item.SimilarFilmId)</td>
                 <td>                    
                     <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(
-                        new ClickRefModel<FilmGenreDTO>(PageType.Delete, item)))">
+                        new ClickRefModel<SimilarFilmsDTO>(PageType.Delete, item)))">
                         Delete
                     </button>
                 </td>
@@ -23,8 +22,7 @@
         }
     </tbody>
 </table>
-
 @code {
-    [Parameter] public List<FilmGenreDTO> Model { get; set; }
-    [Parameter] public EventCallback<ClickRefModel<FilmGenreDTO>> OnClick { get; set; }
+    [Parameter] public List<SimilarFilmsDTO> Model { get; set; }
+    [Parameter] public EventCallback<ClickRefModel<SimilarFilmsDTO>> OnClick { get; set; }
 }

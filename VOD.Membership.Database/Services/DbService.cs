@@ -80,6 +80,7 @@ public class DbService : IDbService
         return true;
     }
 
+    //INCLUDE
     public async Task IncludeAsync<TEntity>()
         where TEntity : class, IEntity
     {
@@ -135,7 +136,10 @@ public class DbService : IDbService
         try
         {
             var entity = _mapper.Map<TReferenceEntity>(dto);
-            if (entity == null) { return false; }
+            if (entity == null) 
+            { 
+                return false; 
+            }
             _db.Remove(entity);
         }
         catch { throw; }

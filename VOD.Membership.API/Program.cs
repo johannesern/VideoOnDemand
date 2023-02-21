@@ -24,8 +24,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<VODContext>( options => 
-        options.UseSqlServer(builder.Configuration.GetConnectionString("VODConnection"))
-               .EnableSensitiveDataLogging());
+        options.UseSqlServer(builder.Configuration.GetConnectionString("VODConnection")));
 
         // All calls gets their own object to use
         builder.Services.AddScoped<IDbService, DbService>();
@@ -65,8 +64,7 @@ public class Program
 			cfg.CreateMap<FilmCreateDTO, Film>();			
             cfg.CreateMap<FilmEditDTO, Film>();
 
-            cfg.CreateMap<Genre, GenreDTO>()
-            .ReverseMap();
+            cfg.CreateMap<Genre, GenreDTO>().ReverseMap();
 			cfg.CreateMap<GenreCreateDTO, Genre>();
 			cfg.CreateMap<GenreEditDTO, Genre>();
 
@@ -81,7 +79,8 @@ public class Program
         });
         var mapper = config.CreateMapper();
 
-            //Singleton skapar ett globalt objekt anvädning
-            services.AddSingleton(mapper);
+        //Singleton skapar ett globalt objekt anvädning
+        services.AddSingleton(mapper);
+
     }
 }

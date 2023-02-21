@@ -12,7 +12,7 @@ using VOD.Films.Database.Contexts;
 namespace VOD.Films.Database.Migrations
 {
     [DbContext(typeof(VODContext))]
-    [Migration("20230221084235_CreatingTables")]
+    [Migration("20230221151602_CreatingTables")]
     partial class CreatingTables
     {
         /// <inheritdoc />
@@ -143,17 +143,21 @@ namespace VOD.Films.Database.Migrations
 
             modelBuilder.Entity("VOD.Films.Database.Entities.FilmGenre", b =>
                 {
-                    b.HasOne("VOD.Films.Database.Entities.Film", null)
+                    b.HasOne("VOD.Films.Database.Entities.Film", "Film")
                         .WithMany()
                         .HasForeignKey("FilmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VOD.Films.Database.Entities.Genre", null)
+                    b.HasOne("VOD.Films.Database.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Film");
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.SimilarFilm", b =>
@@ -161,7 +165,6 @@ namespace VOD.Films.Database.Migrations
                     b.HasOne("VOD.Films.Database.Entities.Film", "Film")
                         .WithMany("SimilarFilms")
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("VOD.Films.Database.Entities.Film", "Similar")

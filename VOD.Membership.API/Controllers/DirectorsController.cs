@@ -15,7 +15,7 @@ public class DirectorsController : ControllerBase
         //Här ska in en turnery eller if sats gällande fria filmer eller ej
         try
         {
-            await _db.IncludeAsync<Film>();
+            await _db.IncludeAsync<Director>();
             return await _db.HttpGetAsync<Director, DirectorDTO>();
         }
         catch (Exception ex) { }

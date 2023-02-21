@@ -23,20 +23,11 @@ public class VODContext : DbContext
             .HasMany(sf => sf.SimilarFilms)
             .WithOne(f => f.Film)
             .HasForeignKey(d => d.FilmId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Cascade);
 
             entity
             .HasMany(g => g.Genres)
             .WithMany(f => f.Films)
-            .UsingEntity<FilmGenre>()
-            .ToTable("FilmGenres");
-        });
-
-        builder.Entity<Genre>(entity =>
-        {
-            entity
-            .HasMany(f => f.Films)
-            .WithMany(g => g.Genres)
             .UsingEntity<FilmGenre>()
             .ToTable("FilmGenres");
         });

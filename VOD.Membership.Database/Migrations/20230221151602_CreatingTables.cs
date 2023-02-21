@@ -98,8 +98,7 @@ namespace VOD.Films.Database.Migrations
                         name: "FK_SimilarFilms_Films_FilmId",
                         column: x => x.FilmId,
                         principalTable: "Films",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SimilarFilms_Films_SimilarFilmId",
                         column: x => x.SimilarFilmId,

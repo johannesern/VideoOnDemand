@@ -43,7 +43,7 @@
         {
             try
             {
-                Genre = await AdminService.SingleAsync<GenreDTO>($"directors/{model.Id}");
+                Genre = await AdminService.SingleAsync<GenreDTO>($"genres/{model.Id}");
             }
             catch { Alert = "No result."; }
         }
@@ -53,7 +53,7 @@
     async Task OnChange(string alert)
     {
         Alert = alert;
-        Model = await AdminService.GetAsync<GenreDTO>($"directors");
+        Model = await AdminService.GetAsync<GenreDTO>($"genres");
         ChangePageType(PageType.Index);
     }
 

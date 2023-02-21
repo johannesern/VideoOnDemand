@@ -115,19 +115,25 @@ public static class HttpExtensions
             where TReferenceEntity : class, IReferenceEntity
             where TDto : class
     {       
-
-        if (dto == null) { return Results.NotFound(); }
         try
         {
-            if (!db.DeleteReference<TReferenceEntity, TDto>(dto)) { return Results.NotFound(); }
+            var success = db.DeleteReference<TReferenceEntity, TDto>(dto);
+            if (success is false) 
+            { 
+                return Results.NotFound();
+            }
 
-            if (await db.SaveChangesAsync()) return Results.NoContent();
+            success = await db.SaveChangesAsync();
+            if (success is false)
+            {
+                return Results.NoContent(); 
+            }
+            return Results.NoContent();
         }
         catch (Exception ex)
         {
             return Results.BadRequest($"Couldn't delete the {typeof(TReferenceEntity).Name} entity.\n{ex}.");
         }
-        return Results.Ok();
     }
     //public static GetURI se OneNote för implementering
 

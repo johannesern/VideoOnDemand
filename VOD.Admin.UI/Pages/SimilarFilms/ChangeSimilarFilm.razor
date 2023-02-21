@@ -4,29 +4,29 @@
     <form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
         <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
             <DataAnnotationsValidator />
-            <h4>@Page FilmGenre</h4>
+            <h4>@Page SimilarFilm</h4>
             <div>
                 @if (Page.Equals(PageType.Delete))
                 {
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" disabled placeholder="FilmId"></InputNumber>
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" disabled placeholder="GenreId"></InputNumber>
+                    <InputNumber id="filmid" class="form-control mb-1" @bind-Value="Model.FilmId" disabled placeholder="FilmId"></InputNumber>
+                    <InputNumber id="similarid" class="form-control mb-1" @bind-Value="Model.SimilarFilmId" disabled placeholder="SimilarId"></InputNumber>
                 }
                 else
                 {
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" placeholder="FilmId"></InputNumber>
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" placeholder="GenreId"></InputNumber>
+                    <InputNumber id="filmid" class="form-control mb-1" @bind-Value="Model.FilmId" placeholder="FilmId"></InputNumber>
+                    <InputNumber id="similarid" class="form-control mb-1" @bind-Value="Model.SimilarFilmId" placeholder="SimilarId"></InputNumber>
                 }
             </div>
             <ValidationMessage For="@(() => Model.FilmId)" />
 
             <div>
-                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page FilmGenre</button>
+                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page SimilarFilm</button>
             </div>
         </EditForm>
     </form>
 </div>
 @code {
-    [Parameter] public FilmGenreDTO Model { get; set; } = new();
+    [Parameter] public SimilarFilmsDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
 
@@ -35,10 +35,10 @@
         try
         {
             if (Page == PageType.Create)
-                await AdminService.CreateAsync<FilmGenreDTO>("filmgenres", Model);
-                            
+                await AdminService.CreateAsync<SimilarFilmsDTO>("similarfilms", Model);
+
             else if (Page == PageType.Delete)
-                await AdminService.DeleteRefAsync<FilmGenreDTO>($"filmgenres", Model);
+                await AdminService.DeleteRefAsync<SimilarFilmsDTO>($"similarfilms", Model);
 
             await OnChange.InvokeAsync("");
         }
