@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Films.Database", "VOD.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.Films.API", "VOD.Membership.API\VOD.Films.API.csproj", "{E07F6DF9-5B4C-4A97-BD4D-F7AC68B5C3B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VOD.User.UI", "VOD.User.UI\VOD.User.UI.csproj", "{4F030C34-6A1B-4052-8B40-186A782F7793}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOD.User.UI", "VOD.User.UI\VOD.User.UI.csproj", "{DD6D5865-97CC-4218-BC11-7319A1DAE91D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{E07F6DF9-5B4C-4A97-BD4D-F7AC68B5C3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E07F6DF9-5B4C-4A97-BD4D-F7AC68B5C3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E07F6DF9-5B4C-4A97-BD4D-F7AC68B5C3B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F030C34-6A1B-4052-8B40-186A782F7793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F030C34-6A1B-4052-8B40-186A782F7793}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F030C34-6A1B-4052-8B40-186A782F7793}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F030C34-6A1B-4052-8B40-186A782F7793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6D5865-97CC-4218-BC11-7319A1DAE91D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6D5865-97CC-4218-BC11-7319A1DAE91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6D5865-97CC-4218-BC11-7319A1DAE91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6D5865-97CC-4218-BC11-7319A1DAE91D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

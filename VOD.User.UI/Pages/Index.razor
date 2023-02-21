@@ -1,6 +1,23 @@
-﻿@page "/"
+﻿@inject IUserService userService
+@page "/"
+
 
 <PageTitle>Dashboard</PageTitle>
 
-Welcome to your new app.
+<div class="d-flex justify-content-center">
+    <h1>Dashboard</h1>
+</div>
+
+<FilmCard Model="Films"></FilmCard>    
+
+
+@code{
+    List<FilmDTO> Films { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Films = await userService.GetFilmsAsync();
+    }
+}
+
 
