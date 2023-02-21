@@ -1,4 +1,4 @@
-﻿
+﻿@using VOD.Common.DTOs;
 <table class="table">
     <thead>
         <tr>
@@ -11,15 +11,16 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@(item.FilmId)</td>
+                <th scope="row">@(item.FilmId)</th>
                 <td>@(item.GenreId)</td>
                 <td>
-                    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @*@onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Edit,
-                            item.FilmId, item.GenreId)))*@">
+                    <button type="button" class="btn btn-outline-primary rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(
+                        new ClickRefModel<FilmGenreDTO>(PageType.Edit, item)))">
                         Edit
                     </button>
-                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @*@onclick="@( async () => await OnClick.InvokeAsync(new ClickRefModel(PageType.Delete,
-                            item.FilmId, item.GenreId)))*@">
+
+                    <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(
+                        new ClickRefModel<FilmGenreDTO>(PageType.Delete, item)))">
                         Delete
                     </button>
                 </td>
@@ -30,4 +31,5 @@
 
 @code {
     [Parameter] public List<FilmGenreDTO> Model { get; set; }
+    [Parameter] public EventCallback<ClickRefModel<FilmGenreDTO>> OnClick { get; set; }
 }

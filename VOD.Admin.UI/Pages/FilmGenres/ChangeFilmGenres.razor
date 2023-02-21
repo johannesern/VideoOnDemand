@@ -2,23 +2,22 @@
 
 <div class="d-flex justify-content-center">
     <form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
-        <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">        @*DU SKA SKICKA TVÅ IDN TILL CONTROLLERN*@
+        <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
             <DataAnnotationsValidator />
-            <h4>@Page Director</h4>
+            <h4>@Page FilmGenre</h4>
             <div>
                 @if (Page.Equals(PageType.Delete))
                 {
-                    <InputNumber id="filmId" class="" @bind-Value="Model.FilmId" disabled placeholder="FilmID"></InputNumber>
-                    <InputNumber id="genreId" class="" @bind-Value="Model.GenreId" disabled placeholder="GenreID"></InputNumber>
+                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" disabled placeholder="FilmId"></InputNumber>
+                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" disabled placeholder="GenreId"></InputNumber>
                 }
                 else
                 {
-                    <InputNumber id="filmId" class="" @bind-Value="Model.FilmId" disabled placeholder="FilmID"></InputNumber>
-                    <InputNumber id="genreId" class="" @bind-Value="Model.GenreId" disabled placeholder="GenreID"></InputNumber>
+                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" placeholder="FilmId"></InputNumber>
+                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" placeholder="GenreId"></InputNumber>
                 }
             </div>
             <ValidationMessage For="@(() => Model.FilmId)" />
-            <ValidationMessage For="@(() => Model.GenreId)" />
 
             <div>
                 <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page FilmGenre</button>
@@ -30,7 +29,8 @@
     [Parameter] public FilmGenreDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
-    List<FilmGenreDTO> FilmGenres = new();
+    //List<FilmDTO> Films = new();
+    //List<GenreDTO> Genres = new();
 
     private async Task OnFormSubmit()
     {
@@ -40,7 +40,7 @@
                 await AdminService.CreateAsync<FilmGenreDTO>("filmgenres", Model);
 
             else if (Page == PageType.Delete)
-                await AdminService.DeleteAsync<FilmGenreDTO>($"filmgenres/{Model}");
+                await AdminService.DeleteAsync<FilmGenreDTO>($"filmgenres?id={Model.FilmId}&id={Model.GenreId}");
 
             await OnChange.InvokeAsync("");
         }
@@ -52,6 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        FilmGenres = await AdminService.GetAsync<FilmGenreDTO>($"filmgenres");
+        //Films = await AdminService.GetAsync<FilmDTO>($"films");
+        //Genres = await AdminService.GetAsync<GenreDTO>($"genres");
     }
 }

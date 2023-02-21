@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace VOD.Films.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingTabels : Migration
+    public partial class CreatingTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +43,7 @@ namespace VOD.Films.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Released = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Released = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DirectorId = table.Column<int>(type: "int", nullable: true),
                     ThumbnailURL = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -58,12 +57,11 @@ namespace VOD.Films.Database.Migrations
                         name: "FK_Films_Directors_DirectorId",
                         column: x => x.DirectorId,
                         principalTable: "Directors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilmGenre",
+                name: "FilmGenres",
                 columns: table => new
                 {
                     FilmId = table.Column<int>(type: "int", nullable: false),
@@ -71,19 +69,19 @@ namespace VOD.Films.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmGenre", x => new { x.FilmId, x.GenreId });
+                    table.PrimaryKey("PK_FilmGenres", x => new { x.FilmId, x.GenreId });
                     table.ForeignKey(
-                        name: "FK_FilmGenre_Films_FilmId",
+                        name: "FK_FilmGenres_Films_FilmId",
                         column: x => x.FilmId,
                         principalTable: "Films",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FilmGenre_Genres_GenreId",
+                        name: "FK_FilmGenres_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,12 +105,12 @@ namespace VOD.Films.Database.Migrations
                         column: x => x.SimilarFilmId,
                         principalTable: "Films",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FilmGenre_GenreId",
-                table: "FilmGenre",
+                name: "IX_FilmGenres_GenreId",
+                table: "FilmGenres",
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
@@ -130,7 +128,7 @@ namespace VOD.Films.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FilmGenre");
+                name: "FilmGenres");
 
             migrationBuilder.DropTable(
                 name: "SimilarFilms");

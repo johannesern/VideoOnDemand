@@ -62,8 +62,8 @@ namespace VOD.Films.Database.Migrations
                     b.Property<bool>("Free")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("Released")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Released")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThumbnailURL")
                         .HasMaxLength(1024)
@@ -93,7 +93,7 @@ namespace VOD.Films.Database.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("FilmGenre", (string)null);
+                    b.ToTable("FilmGenres", (string)null);
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.Genre", b =>
@@ -132,30 +132,25 @@ namespace VOD.Films.Database.Migrations
             modelBuilder.Entity("VOD.Films.Database.Entities.Film", b =>
                 {
                     b.HasOne("VOD.Films.Database.Entities.Director", "Director")
-                        .WithMany("Films")
-                        .HasForeignKey("DirectorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("DirectorId");
 
                     b.Navigation("Director");
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.FilmGenre", b =>
                 {
-                    b.HasOne("VOD.Films.Database.Entities.Film", "Film")
+                    b.HasOne("VOD.Films.Database.Entities.Film", null)
                         .WithMany()
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VOD.Films.Database.Entities.Genre", "Genre")
+                    b.HasOne("VOD.Films.Database.Entities.Genre", null)
                         .WithMany()
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Film");
-
-                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.SimilarFilm", b =>
@@ -163,23 +158,18 @@ namespace VOD.Films.Database.Migrations
                     b.HasOne("VOD.Films.Database.Entities.Film", "Film")
                         .WithMany("SimilarFilms")
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("VOD.Films.Database.Entities.Film", "Similar")
                         .WithMany()
                         .HasForeignKey("SimilarFilmId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Film");
 
                     b.Navigation("Similar");
-                });
-
-            modelBuilder.Entity("VOD.Films.Database.Entities.Director", b =>
-                {
-                    b.Navigation("Films");
                 });
 
             modelBuilder.Entity("VOD.Films.Database.Entities.Film", b =>

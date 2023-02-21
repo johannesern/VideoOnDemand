@@ -4,7 +4,7 @@
     <form class="d-flex justify-content-center mb-5 border border-1 border-secondary w-25 p-2">
         <EditForm Model="Model" OnValidSubmit="@OnFormSubmit">
             <DataAnnotationsValidator />
-            <h4>@Page Director</h4>
+            <h4>@Page Genre</h4>
             <div>
                 @if (Page.Equals(PageType.Delete))
                 {
@@ -24,7 +24,7 @@
     </form>
 </div>
 @code {
-    [Parameter] public DirectorDTO Model { get; set; } = new();
+    [Parameter] public GenreDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
     List<FilmDTO> Films = new();
@@ -34,13 +34,13 @@
         try
         {
             if (Page == PageType.Create)
-                await AdminService.CreateAsync<DirectorDTO>("directors", Model);
+                await AdminService.CreateAsync<GenreDTO>("directors", Model);
 
             else if (Page == PageType.Edit)
-                await AdminService.EditAsync<DirectorDTO>($"directors/{Model.Id}", Model);
+                await AdminService.EditAsync<GenreDTO>($"directors/{Model.Id}", Model);
 
             else if (Page == PageType.Delete)
-                await AdminService.DeleteAsync<DirectorDTO>($"directors/{Model.Id}");
+                await AdminService.DeleteAsync<GenreDTO>($"directors/{Model.Id}");
 
             await OnChange.InvokeAsync("");
         }

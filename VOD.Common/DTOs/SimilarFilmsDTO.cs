@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace VOD.Common.DTOs;
+﻿namespace VOD.Common.DTOs;
 
 public class SimilarFilmsDTO
 {
@@ -17,5 +15,3 @@ public class SimilarFilmsCreateDTO
 	public int SimilarFilmId { get; set; }
 	
 }
-
-

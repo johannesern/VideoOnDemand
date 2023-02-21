@@ -10,7 +10,7 @@ public class Film : IEntity
     public int Id { get; set; }
     [MaxLength(50), Required]
     public string Title { get; set; }
-    public DateTime Released { get; set; }
+    public string? Released { get; set; }
     public int? DirectorId { get; set; }
     [MaxLength(1024)]
     public string? ThumbnailURL { get; set; }

@@ -46,4 +46,8 @@ public interface IDbService
     bool DeleteReference<TReferenceEntity, TDto>(TDto dto)
         where TReferenceEntity : class, IReferenceEntity
         where TDto : class;
+    Task<TDto> SingleRefAsync<TReferenceEntity, TDto>(
+        Expression<Func<TReferenceEntity, bool>> expression)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class;
 }

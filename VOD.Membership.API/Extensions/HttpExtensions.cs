@@ -1,4 +1,6 @@
-﻿namespace VOD.Films.API.Extensions;
+﻿using VOD.Films.Database.Entities;
+
+namespace VOD.Films.API.Extensions;
 
 public static class HttpExtensions
 {
@@ -112,7 +114,9 @@ public static class HttpExtensions
     public static async Task<IResult> HttpDeleteReferenceAsync<TReferenceEntity, TDto>(this IDbService db, TDto dto)
             where TReferenceEntity : class, IReferenceEntity
             where TDto : class
-    {
+    {       
+
+        if (dto == null) { return Results.NotFound(); }
         try
         {
             if (!db.DeleteReference<TReferenceEntity, TDto>(dto)) { return Results.NotFound(); }

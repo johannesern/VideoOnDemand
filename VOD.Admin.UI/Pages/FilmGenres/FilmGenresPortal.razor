@@ -25,7 +25,7 @@
     <button type="button" class="btn btn-outline-success rounded-0" @onclick="()=>ChangePageType(PageType.Create)">Create</button>
 </div>
 
-<FilmGenresIndex Model="Model"></FilmGenresIndex>
+<FilmGenresIndex Model="Model" OnClick="OnClick"></FilmGenresIndex>
 
 @code {
     string Alert = string.Empty;
@@ -36,6 +36,19 @@
     void ChangePageType(string pageType) => Navigation = pageType;
 
     void CloseAlert() => Alert = string.Empty;
+
+    async Task OnClick(ClickRefModel<FilmGenreDTO> model)
+    {
+        if (model.PageType.Equals(PageType.Edit) || model.PageType.Equals(PageType.Delete))
+        {
+            try
+            {
+                FilmGenre = model.dto;
+            }
+            catch { Alert = "No result."; }
+        }
+        ChangePageType(model.PageType);
+    }
 
     async Task OnChange(string alert)
     {

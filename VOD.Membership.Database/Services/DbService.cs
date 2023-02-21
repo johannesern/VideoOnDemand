@@ -105,6 +105,20 @@ public class DbService : IDbService
         return _mapper.Map<List<TDto>>(entities);
     }
 
+    public async Task<TDto> SingleRefAsync<TReferenceEntity, TDto>(
+    Expression<Func<TReferenceEntity, bool>> expression)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        var entity = await SingelAsync(expression);
+        return _mapper.Map<TDto>(entity);
+    }
+
+    private async Task<TReferenceEntity?> SingelAsync<TReferenceEntity>(
+    Expression<Func<TReferenceEntity, bool>> expression)
+    where TReferenceEntity : class, IReferenceEntity =>
+        await _db.Set<TReferenceEntity>().SingleOrDefaultAsync(expression);
+
     public async Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
 		where TReferenceEntity : class, IReferenceEntity
 		where TDto : class

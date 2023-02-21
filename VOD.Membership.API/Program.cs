@@ -14,6 +14,8 @@ public class Program
             );
         });
 
+        
+
         // Add services to the container.
         builder.Services.AddControllers();
 
@@ -21,11 +23,11 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddDbContext<VODContext>(
-            options => options.UseSqlServer(
-                builder.Configuration.GetConnectionString("VODConnection")));
+        builder.Services.AddDbContext<VODContext>( options => 
+        options.UseSqlServer(builder.Configuration.GetConnectionString("VODConnection"))
+               .EnableSensitiveDataLogging());
 
-        // All calls gets thir own object to use
+        // All calls gets their own object to use
         builder.Services.AddScoped<IDbService, DbService>();
         ConfigureAutomapper(builder.Services);
 
@@ -58,7 +60,6 @@ public class Program
             .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
             .ForMember(dest => dest.Genres, src => src.MapFrom(s => s.Genres.Select(y => y.Name).ToList()))
             .ForMember(dest => dest.Similar, src => src.MapFrom(s => s.SimilarFilms.Select(y => y.Similar.Title)))
-            .ForMember(dest => dest.Released, src => src.MapFrom(s => s.Released.ToString()))
             .ReverseMap()
             .ForMember(dest => dest.Director, src => src.Ignore());
 			cfg.CreateMap<FilmCreateDTO, Film>();			
@@ -69,10 +70,7 @@ public class Program
 			cfg.CreateMap<GenreCreateDTO, Genre>();
 			cfg.CreateMap<GenreEditDTO, Genre>();
 
-            cfg.CreateMap<Director, DirectorDTO>()
-            .ForMember(dest => dest.Films, src => src.MapFrom(s => s.Films.Select(y => y.Title).ToList()))
-            .ReverseMap()
-            .ForMember(dest => dest.Films, src => src.Ignore());
+            cfg.CreateMap<Director, DirectorDTO>().ReverseMap();
             cfg.CreateMap<DirectorEditDTO, Director>();
             cfg.CreateMap<DirectorCreateDTO, Director>();
 

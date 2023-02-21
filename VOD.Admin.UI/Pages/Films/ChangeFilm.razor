@@ -24,9 +24,9 @@
                 <ValidationMessage For="@(() => Model.Description)" />
 
                 <div>
-                    <InputText id="description" class="form-control mb-1" @bind-Value="Model.Released" placeholder="Description"></InputText>
+                    <InputText id="description" class="form-control mb-1" @bind-Value="Model.Released" placeholder="Released"></InputText>
                 </div>
-                <ValidationMessage For="@(() => Model.Description)" />
+                <ValidationMessage For="@(() => Model.Released)" />
 
                 <div>
                     <InputText id="thumbnailURL" class="form-control mb-1" @bind-Value="Model.ThumbnailURL" placeholder="ThumbnailURL"></InputText>
@@ -47,17 +47,7 @@
                         }
                     </InputSelect>
                 </div>
-
-                @*<div>
-                    <InputSelect id="selectGenre" class="form-control mb-1" @bind-Value="Model.Genres">
-                        <option value=0>Genre...</option>
-                        @foreach(var genre in Genres)
-                        {                            
-                            <option value="@genre.Id">@genre.Name</option>
-                        }
-                    </InputSelect>
-                </div>*@
-            
+                
                 <div>
                     <label>
                         <InputCheckbox @bind-Value="Model.Free"></InputCheckbox>
