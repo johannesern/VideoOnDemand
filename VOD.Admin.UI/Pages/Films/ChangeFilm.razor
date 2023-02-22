@@ -32,6 +32,10 @@
                     <InputText id="thumbnailURL" class="form-control mb-1" @bind-Value="Model.ThumbnailURL" placeholder="ThumbnailURL"></InputText>
                 </div>
                 <ValidationMessage For="@(() => Model.ThumbnailURL)" />
+                <div>
+                    <InputText id="backgroundURL" class="form-control mb-1" @bind-Value="Model.BackgroundURL" placeholder="BackgroundURL"></InputText>
+                </div>
+                <ValidationMessage For="@(() => Model.BackgroundURL)" />
 
                 <div>
                     <InputText id="filmURL" class="form-control mb-1" @bind-Value="Model.FilmUrl" placeholder="FilmURL"></InputText>

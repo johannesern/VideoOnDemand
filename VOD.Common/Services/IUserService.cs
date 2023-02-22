@@ -2,7 +2,7 @@
 {
     public interface IUserService
     {
-        Task<FilmDTO> GetFilmAsync(int id);
+        Task<FilmDTO> GetFilmAsync(int? id);
         Task<List<FilmDTO>> GetFilmsAsync();
     }
 }

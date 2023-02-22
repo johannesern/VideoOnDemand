@@ -1,5 +1,6 @@
 ﻿@inject IUserService userService
 @page "/"
+@using VOD.User.UI.Pages;
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -8,7 +9,7 @@
 <div class="d-flex justify-content-between">
     @foreach(var film in Films)
     {
-        <FilmCard Film="@film"/>
+        <FilmCard Film="@film"/>        
     }
 </div>
 

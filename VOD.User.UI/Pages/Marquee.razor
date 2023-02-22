@@ -1,0 +1,13 @@
+﻿
+<div class="d-flex flex-column">
+    <div>
+        <img class="backgroundimage position-absolute" src="images/@Model.BackgroundURL"/>
+        <img class="ontopimage position-relative" src="images/@Model.ThumbnailURL"/>
+    </div>
+
+</div>
+
+
+@code {
+    [Parameter] public FilmDTO Model { get; set; } = new();
+}

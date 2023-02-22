@@ -14,6 +14,8 @@ public class Film : IEntity
     public int? DirectorId { get; set; }
     [MaxLength(1024)]
     public string? ThumbnailURL { get; set; }
+    [MaxLength(1024)]
+    public string? BackgroundURL { get; set; }
     [MaxLength(200)]
     public string? Description { get; set; }
     [MaxLength(1024)]

@@ -46,6 +46,7 @@ namespace VOD.Films.Database.Migrations
                     Released = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DirectorId = table.Column<int>(type: "int", nullable: true),
                     ThumbnailURL = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    BackgroundURL = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     FilmUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Free = table.Column<bool>(type: "bit", nullable: false)
@@ -98,13 +99,14 @@ namespace VOD.Films.Database.Migrations
                         name: "FK_SimilarFilms_Films_FilmId",
                         column: x => x.FilmId,
                         principalTable: "Films",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SimilarFilms_Films_SimilarFilmId",
                         column: x => x.SimilarFilmId,
                         principalTable: "Films",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

@@ -48,6 +48,10 @@ namespace VOD.Films.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BackgroundURL")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -83,10 +87,10 @@ namespace VOD.Films.Database.Migrations
 
             modelBuilder.Entity("VOD.Films.Database.Entities.FilmGenre", b =>
                 {
-                    b.Property<int?>("FilmId")
+                    b.Property<int>("FilmId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.HasKey("FilmId", "GenreId");
@@ -162,6 +166,7 @@ namespace VOD.Films.Database.Migrations
                     b.HasOne("VOD.Films.Database.Entities.Film", "Film")
                         .WithMany("SimilarFilms")
                         .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VOD.Films.Database.Entities.Film", "Similar")

@@ -24,11 +24,11 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<FilmDTO> GetFilmAsync(int id)
+    public async Task<FilmDTO> GetFilmAsync(int? id)
     {
         try
         {
-            if (id >= 0) return default;
+            if (id <= 0) return new();
 
             using var response = await _http.Client.GetAsync($"films/{id}");
             response.EnsureSuccessStatusCode();

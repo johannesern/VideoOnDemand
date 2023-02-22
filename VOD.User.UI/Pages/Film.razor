@@ -1,6 +1,12 @@
 ﻿@inject IUserService userService
 @page "/film/{Id:int}"
-<h3>Film</h3>
+
+<h3 class="d-flex justify-content-center">Film</h3>
+<a class="btn btn-danger mb-1" href="/">
+    <i class="oi oi-arrow-left"></i><span class="oi-vertical-align"> Back to Dashboard</span>
+</a>
+
+<Marquee Model="Model" />
 
 @code {
     [Parameter] public int? Id { get; set; }

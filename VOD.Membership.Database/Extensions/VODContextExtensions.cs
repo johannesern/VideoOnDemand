@@ -57,8 +57,9 @@ public static class VODContextExtensions
 				Title = "Jurassic Park",
 				DirectorId = 1,
 				Released = "1993-06-11",
-				ThumbnailURL = "/content/jurassic_park1.jpg",
-				Description = description.Substring(10, 40),
+				ThumbnailURL = "jurassic_park1.jpg",
+                BackgroundURL = "...",
+                Description = description.Substring(10, 40),
 				FilmUrl = "https://www.imdb.com/video/vi177055257/?playlistId=tt0107290&ref_=tt_pr_ov_vi",
 				Free = true
 			});
@@ -68,7 +69,8 @@ public static class VODContextExtensions
 				Title = "The Lost World: Jurassic Park",
 				DirectorId = 1,
 				Released = "1997-01-01",
-				ThumbnailURL = "/content/jurassic_park1.jpg",
+				ThumbnailURL = "jurassic_park1.jpg",
+				BackgroundURL = "...",
 				Description = description.Substring(10, 40),
 				FilmUrl = "https://www.imdb.com/video/vi1839120153/?playlistId=tt0119567&ref_=tt_pr_ov_vi",
 				Free = true
@@ -79,8 +81,9 @@ public static class VODContextExtensions
 				Title = "The Lord of the Rings: Fellowship of the Ring",
 				DirectorId = 2,
 				Released = "2001-01-01",
-				ThumbnailURL = "...",
-				Description = description.Substring(10, 40),
+				ThumbnailURL = "lotr1.jpg",
+                BackgroundURL = "...",
+                Description = description.Substring(10, 40),
 				FilmUrl = "https://www.imdb.com/video/vi684573465/?playlistId=tt0120737&ref_=tt_ov_vi",
 				Free = true
 			});
@@ -89,8 +92,9 @@ public static class VODContextExtensions
 				Title = "The Lord of the Rings: The Two Towers",
 				DirectorId = 2,
 				Released = "2002-01-01",
-				ThumbnailURL = "...",
-				Description = description.Substring(10, 40),
+				ThumbnailURL = "lotr2.jpg",
+                BackgroundURL = "...",
+                Description = description.Substring(10, 40),
 				FilmUrl = "https://www.imdb.com/video/vi701350681/?playlistId=tt0167261&ref_=tt_pr_ov_vi",
 				Free = true
 			});
@@ -99,8 +103,9 @@ public static class VODContextExtensions
 				Title = "Jurassic Park III",
 				DirectorId = 1,
 				Released = "2001-01-01",
-				ThumbnailURL = "/content/jurassic_park3.jpg",
-				Description = description.Substring(10, 40),
+				ThumbnailURL = "jurassic_park3.jpg",
+                BackgroundURL = "...",
+                Description = description.Substring(10, 40),
 				FilmUrl = "https://youtu.be/gjIaV6CU0wA",
 				Free = true
 			});
@@ -109,8 +114,9 @@ public static class VODContextExtensions
 				Title = "The Lord of the Rings: The Return of the King",
 				DirectorId = 1,
 				Released = "2003-01-01",
-				ThumbnailURL = "/content/lotr3.jpg",
-				Description = description.Substring(10, 40),
+				ThumbnailURL = "lotr3.jpg",
+                BackgroundURL = "...",
+                Description = description.Substring(10, 40),
 				FilmUrl = "https://www.imdb.com/video/vi718127897/?playlistId=tt0167260&ref_=tt_pr_ov_vi",
 				Free = false
 			});
