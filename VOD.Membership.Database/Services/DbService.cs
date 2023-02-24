@@ -113,7 +113,7 @@ public class DbService : IDbService
     {
         var entity = await SingelAsync(expression);
         return _mapper.Map<TDto>(entity);
-    }
+    }    
 
     private async Task<TReferenceEntity?> SingelAsync<TReferenceEntity>(
     Expression<Func<TReferenceEntity, bool>> expression)

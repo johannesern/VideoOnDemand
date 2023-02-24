@@ -2,22 +2,24 @@
 @page "/"
 @using VOD.User.UI.Pages;
 
-<PageTitle>Dashboard</PageTitle>
+<PageTitle>Njetflix: not really netflix</PageTitle>
 
-<h1 class="d-flex justify-content-center">Dashboard</h1>
+<h1 class="d-flex justify-content-center">Njetflix</h1>
 
-<div class="d-flex justify-content-between">
-    @foreach(var film in Films)
+<div class="d-flex flex-column">
+    @foreach(var genre in Genres)
     {
-        <FilmCard Film="@film"/>        
+        <GenreTemplate Genre="@genre" Films="Films" />        
     }
 </div>
 
 @code{
-    List<FilmDTO> Films { get; set; } = new();
+    List<FilmDTO>? Films { get; set; } = new();
+    List<GenreDTO>? Genres { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
+        Genres = await userService.GetGenresAsync();
         Films = await userService.GetFilmsAsync();
     }
 }

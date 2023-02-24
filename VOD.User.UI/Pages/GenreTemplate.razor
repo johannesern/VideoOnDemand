@@ -1,0 +1,20 @@
+﻿
+<h3>@Genre.Name</h3>
+
+<div class="d-flex flex-row flex-wrap mb-2">
+    @foreach (var film in filteredFilms)
+    {
+            <FilmCard Film="@film" />        
+    }
+</div>    
+
+@code {
+    [Parameter] public GenreDTO Genre { get; set; } = new();
+    [Parameter] public List<FilmDTO> Films { get; set; } = new();
+    List<FilmDTO> filteredFilms { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        filteredFilms = Films.Where(film => film.Genres.Contains(Genre.Name)).ToList();
+    }
+}

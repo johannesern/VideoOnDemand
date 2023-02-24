@@ -8,16 +8,29 @@
             <div>
                 @if (Page.Equals(PageType.Delete))
                 {
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" disabled placeholder="FilmId"></InputNumber>
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" disabled placeholder="GenreId"></InputNumber>
+                    <InputText id="Film Title" class="form-control me-2" @bind-Value="Model.Film.Title" disabled placeholder="Film Title"></InputText>
+                    <InputText id="Genre Title" class="form-control me-2" @bind-Value="Model.Genre.Name" disabled placeholder="Genre Name"></InputText>
                 }
                 else
                 {
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.FilmId" placeholder="FilmId"></InputNumber>
-                    <InputNumber id="title" class="form-control mb-1" @bind-Value="Model.GenreId" placeholder="GenreId"></InputNumber>
+                    <InputSelect @bind-Value="Model.FilmId" class="form-control mb-3">
+                        <option value=0>Film Title ...</option>
+                        @foreach (var film in Films)
+                        {
+                            <option value="@film.Id">@film.Title</option>
+                        }
+                    </InputSelect>
+                    <InputSelect @bind-Value="Model.GenreId" class="form-control mb-3">
+                        <option value=0>Genre Name ...</option>
+                        @foreach (var genre in Genres)
+                        {
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    </InputSelect>
                 }
+                <ValidationMessage For="@(() => Model.FilmId)" />
+                <ValidationMessage For="@(() => Model.GenreId)" />
             </div>
-            <ValidationMessage For="@(() => Model.FilmId)" />
 
             <div>
                 <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page FilmGenre</button>
@@ -29,6 +42,14 @@
     [Parameter] public FilmGenreDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
+    List<FilmDTO> Films { get; set; } = new();
+    List<GenreDTO> Genres { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Films = await AdminService.GetAsync<FilmDTO>("Films");
+        Genres = await AdminService.GetAsync<GenreDTO>("Genres");
+    }
 
     private async Task OnFormSubmit()
     {

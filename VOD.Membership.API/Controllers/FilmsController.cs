@@ -14,9 +14,10 @@ public class FilmsController : ControllerBase
         try
         {
             await _db.IncludeAsync<Film>();
+            await _db.IncludeAsync<Genre>();
             await _db.IncludeReferenceAsync<FilmGenre>();
-			await _db.IncludeReferenceAsync<SimilarFilm>();
-			return await _db.HttpGetAsync<Film, FilmDTO>();
+            //await _db.IncludeReferenceAsync<SimilarFilm>();
+            return await _db.HttpGetAsync<Film, FilmDTO>();
         }
         catch (Exception ex) { }
         return Results.BadRequest();

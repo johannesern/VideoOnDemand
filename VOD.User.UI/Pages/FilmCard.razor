@@ -1,14 +1,7 @@
 ﻿
-
-<div class="card m-2" style="width: 18rem;">
-    <img src="images/@Film.ThumbnailURL" class="card-img-top" alt="Film Thumbnail">
-    <div class="card-body">
-        <h5 class="card-title">@Film.Title</h5>
-        <p class="card-text">@Film.Description</p>
-        <a href="Film/@Film.Id" class="btn btn-primary">Watch trailer!</a>
-    </div>
-</div>    
-
+<div class="filmcard me-1 mb-1">
+    <a href="Film/@Film.Id"><img src="images/@Film.ThumbnailURL" /></a>
+</div>
 
 @code {
     [Parameter] public FilmDTO Film { get; set; } = new();

@@ -1,19 +1,28 @@
 ﻿@inject IUserService userService
 @page "/film/{Id:int}"
 
-<h3 class="d-flex justify-content-center">Film</h3>
+<h3 class="d-flex justify-content-center">@Model.Title</h3>
+
 <a class="btn btn-danger mb-1" href="/">
     <i class="oi oi-arrow-left"></i><span class="oi-vertical-align"> Back to Dashboard</span>
 </a>
 
-<Marquee Model="Model" />
+<Marquee Model="Model" SimilarFilms="SimilarFilms" FilmGenres="FilmGenres"/>
 
 @code {
     [Parameter] public int? Id { get; set; }
     public FilmDTO Model { get; set; } = new();
+    public List<SimilarFilmsDTO> SimilarFilms { get; set; } = new();
+    public List<FilmGenreDTO> FilmGenres { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         Model = await userService.GetFilmAsync(Id);
+
+        var allSimilar = await userService.GetSimilarAsync();
+        SimilarFilms = allSimilar.Where(allSim => allSim.FilmId == Model.Id).ToList();
+
+        var filmGenres = await userService.GetFilmGenresAsync();
+        FilmGenres = filmGenres.Where(fg => fg.FilmId == Model.Id).ToList();
     }
 }

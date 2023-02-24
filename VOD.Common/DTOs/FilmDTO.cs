@@ -6,14 +6,14 @@ public class FilmDTO
     public string? Title { get; set; }
     public string? Released { get; set; }
     public int? DirectorId { get; set; }
-    public string? Director { get; set; }
+    public DirectorDTO? Director { get; set; }
     public string? ThumbnailURL { get; set; }
     public string? BackgroundURL { get; set; }
     public string? Description { get; set; }
     public string? FilmUrl { get; set; }
     public bool Free { get; set; }
 	public List<string>? Genres { get; set; }
-	public List<string>? Similar { get; set; }
+    public List<SimilarFilmsDTO>? Similar { get; set; }
 }
 
 public class FilmCreateDTO

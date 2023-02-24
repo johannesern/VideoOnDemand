@@ -1,13 +1,39 @@
 ﻿
 <div class="d-flex flex-column">
-    <div>
-        <img class="backgroundimage position-absolute" src="images/@Model.BackgroundURL"/>
-        <img class="ontopimage position-relative" src="images/@Model.ThumbnailURL"/>
+    <a href=""><div class="marquee" style="background-image:url('images/@Model.BackgroundURL');">
+        <img class="" src="images/@Model.ThumbnailURL" />
+        </div>
+    </a>
+    <h1 class="mt-2">@Model.Title</h1>
+    <h5>Regissör: @Model.Director?.Name</h5>
+    <h5>Utgivningsår: @Model.Released</h5>
+    <div class="d-flex flex-row">
+        <h5>Genres:&nbsp;</h5>
+        @foreach(var item in FilmGenres)
+        {
+            <p><h5>@item.Genre.Name&nbsp;</h5></p>            
+        }        
     </div>
-
+    <h5>Info: @Model.Description</h5>
 </div>
 
+<section class="d-flex flex-column justify-content-center mb-2">
+    <header>
+        <h4 style="text-align:center">Films like this one</h4>
+    </header>
+    <div class="d-flex justify-content-center flex-wrap ">
+        @foreach (var film in SimilarFilms)
+        {
+            <div class="similarfilms m-1">
+                <a href="Film/@film.SimilarFilmId"><img src="images/@film.Similar.ThumbnailURL" /></a>
+            </div>
+        }
+    </div>    
+</section>
 
 @code {
     [Parameter] public FilmDTO Model { get; set; } = new();
+    [Parameter] public List<SimilarFilmsDTO> SimilarFilms { get; set; } = new();
+    [Parameter] public List<FilmGenreDTO> FilmGenres { get; set; } = new();
+    
 }

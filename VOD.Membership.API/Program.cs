@@ -56,12 +56,13 @@ public class Program
         var config = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Film, FilmDTO>()
-            .ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
+            //.ForMember(dest => dest.Director, src => src.MapFrom(s => s.Director.Name))
             .ForMember(dest => dest.Genres, src => src.MapFrom(s => s.Genres.Select(y => y.Name).ToList()))
-            .ForMember(dest => dest.Similar, src => src.MapFrom(s => s.SimilarFilms.Select(y => y.Similar.Title)))
-            .ReverseMap()
-            .ForMember(dest => dest.Director, src => src.Ignore());
-			cfg.CreateMap<FilmCreateDTO, Film>();			
+            //.ForMember(dest => dest.Similar, src => src.MapFrom(s => s.SimilarFilms.Select(y => y.Similar.Title)))
+            .ReverseMap();
+            //.ForMember(dest => dest.Director, src => src.Ignore());
+            //cfg.CreateMap<Film, FilmDTO>();
+            cfg.CreateMap<FilmCreateDTO, Film>();			
             cfg.CreateMap<FilmEditDTO, Film>();
 
             cfg.CreateMap<Genre, GenreDTO>().ReverseMap();
@@ -73,6 +74,8 @@ public class Program
             cfg.CreateMap<DirectorCreateDTO, Director>();
 
             cfg.CreateMap<FilmGenre, FilmGenreDTO>().ReverseMap();
+            cfg.CreateMap<FilmGenreDeleteDTO, FilmGenre>().ReverseMap();
+            cfg.CreateMap<FilmGenreCreateDTO, FilmGenre>().ReverseMap();
 
             cfg.CreateMap<SimilarFilm, SimilarFilmsDTO>().ReverseMap();
             cfg.CreateMap<SimilarFilmsCreateDTO, SimilarFilm>();

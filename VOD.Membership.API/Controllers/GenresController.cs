@@ -20,7 +20,7 @@ namespace VOD.Films.API.Controllers
 			try
 			{
 				await _db.IncludeAsync<Film>();
-				await _db.IncludeReferenceAsync<FilmGenre>();
+                await _db.IncludeReferenceAsync<FilmGenre>();
 				return await _db.HttpGetAsync<Genre, GenreDTO>();
 			}
 			catch (Exception ex) { }

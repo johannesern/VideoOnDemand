@@ -10,17 +10,20 @@ public class SimilarFilmsController : ControllerBase
 
     //GET: api/<SimilarFilmsController>
     [HttpGet]
-    public async Task<IResult> Get() => 
-        await _db.HttpGetReferenceAsync<SimilarFilm, SimilarFilmsDTO>();
-
-    // GET api/<SimilarFilmsController>?id=5&id=6
-    [HttpGet("idn")]
-    public async Task<IResult> Get([FromQuery] int[] id)
+    public async Task<IResult> Get()
     {
         await _db.IncludeReferenceAsync<SimilarFilm>();
-        var result = await _db.SingleRefAsync<SimilarFilm, SimilarFilmsDTO>(e => e.FilmId.Equals(id[0]) && e.SimilarFilmId.Equals(id[1]));
-        return Results.Ok(result);
+        return await _db.HttpGetReferenceAsync<SimilarFilm, SimilarFilmsDTO>();
     }
+
+    //GET api/<SimilarFilmsController>?id=5&id=6
+    //[HttpGet("{id}")]
+    //public async Task<IResult> Get(int id)
+    //{
+    //    await _db.IncludeReferenceAsync<SimilarFilm>();
+    //    return await _db.GetReferenceAsync<SimilarFilm, SimilarFilmsDTO>(e => e.FilmId.Equals(id));
+    //}
+
     // POST api/<SimilarFilmsController>
     [HttpPost]
     public async Task<IResult> Post([FromBody] SimilarFilmsDTO dto) =>

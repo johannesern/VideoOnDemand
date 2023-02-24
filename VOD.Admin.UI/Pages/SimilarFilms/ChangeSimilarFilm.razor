@@ -38,7 +38,7 @@
                 await AdminService.CreateAsync<SimilarFilmsDTO>("similarfilms", Model);
 
             else if (Page == PageType.Delete)
-                await AdminService.DeleteRefAsync<SimilarFilmsDTO>($"similarfilms", Model);
+                await AdminService.DeleteRefAsync<SimilarFilmsDTO>("similarfilms", Model);
 
             await OnChange.InvokeAsync("");
         }

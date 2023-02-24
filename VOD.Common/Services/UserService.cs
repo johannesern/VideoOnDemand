@@ -1,4 +1,7 @@
-﻿namespace VOD.Common.Services;
+﻿using System.Net.Http.Json;
+using System;
+
+namespace VOD.Common.Services;
 
 public class UserService : IUserService
 {
@@ -9,7 +12,7 @@ public class UserService : IUserService
     {
         try
         {            
-            using var response = await _http.Client.GetAsync($"films"); //?free={freeOnly}
+            using var response = await _http.Client.GetAsync("films"); //?free={freeOnly}
             response.EnsureSuccessStatusCode();
 
             var result = JsonSerializer.Deserialize<List<FilmDTO>>(await
@@ -38,6 +41,63 @@ public class UserService : IUserService
             { PropertyNameCaseInsensitive = true });
 
             return result ?? default;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<SimilarFilmsDTO>> GetSimilarAsync()
+    {
+        try
+        {
+            using var response = await _http.Client.GetAsync("similarfilms"); //?free={freeOnly}
+            response.EnsureSuccessStatusCode();
+
+            var result = JsonSerializer.Deserialize<List<SimilarFilmsDTO>>(await
+            response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
+            { PropertyNameCaseInsensitive = true });
+
+            return result ?? new List<SimilarFilmsDTO>();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<FilmGenreDTO>> GetFilmGenresAsync()
+    {
+        try
+        {
+            using var response = await _http.Client.GetAsync("filmgenres"); //?free={freeOnly}
+            response.EnsureSuccessStatusCode();
+
+            var result = JsonSerializer.Deserialize<List<FilmGenreDTO>>(await
+            response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
+            { PropertyNameCaseInsensitive = true });
+
+            return result ?? new List<FilmGenreDTO>();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<GenreDTO>> GetGenresAsync()
+    {
+        try
+        {
+            using var response = await _http.Client.GetAsync("genres"); //?free={freeOnly}
+            response.EnsureSuccessStatusCode();
+
+            var result = JsonSerializer.Deserialize<List<GenreDTO>>(await
+            response.Content.ReadAsStreamAsync(), new JsonSerializerOptions
+            { PropertyNameCaseInsensitive = true });
+
+            return result ?? new List<GenreDTO>();
         }
         catch
         {
