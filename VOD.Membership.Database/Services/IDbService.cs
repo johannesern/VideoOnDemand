@@ -1,4 +1,4 @@
-﻿namespace VOD.Films.Database;
+﻿namespace VOD.Films.Database.Services;
 
 public interface IDbService
 {
@@ -13,9 +13,9 @@ public interface IDbService
 
     Task<TEntity> AddAsync<TEntity, TDto>(TDto dto)
         where TEntity : class, IEntity
-        where TDto: class;
+        where TDto : class;
 
-    void Update<TEntity,TDto>(int id, TDto dto)
+    void Update<TEntity, TDto>(int id, TDto dto)
         where TEntity : class, IEntity
         where TDto : class;
 
@@ -27,7 +27,7 @@ public interface IDbService
         where TEntity : class, IEntity;
 
     Task IncludeAsync<TEntity>()
-        where TEntity: class, IEntity;
+        where TEntity : class, IEntity;
 
     Task<bool> SaveChangesAsync();
 
@@ -36,11 +36,11 @@ public interface IDbService
         where TReferenceEntity : class, IReferenceEntity
         where TDto : class;
 
-	Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
-		where TReferenceEntity : class, IReferenceEntity
-		where TDto : class;
+    Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class;
 
-	Task IncludeReferenceAsync<TReferenceEntity>()
+    Task IncludeReferenceAsync<TReferenceEntity>()
     where TReferenceEntity : class, IReferenceEntity;
 
     bool DeleteReference<TReferenceEntity, TDto>(TDto dto)

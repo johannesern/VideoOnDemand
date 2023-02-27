@@ -1,4 +1,5 @@
 ﻿using VOD.Films.Database.Entities;
+using VOD.Films.Database.Services;
 
 namespace VOD.Films.API.Extensions;
 

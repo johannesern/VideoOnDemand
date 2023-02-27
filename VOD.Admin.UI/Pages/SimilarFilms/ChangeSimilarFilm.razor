@@ -8,20 +8,34 @@
             <div>
                 @if (Page.Equals(PageType.Delete))
                 {
-                    <InputNumber id="filmid" class="form-control mb-1" @bind-Value="Model.FilmId" disabled placeholder="FilmId"></InputNumber>
-                    <InputNumber id="similarid" class="form-control mb-1" @bind-Value="Model.SimilarFilmId" disabled placeholder="SimilarId"></InputNumber>
+                    <InputText id="Film Title" class="form-control me-2" @bind-Value="Model.Film.Title" disabled placeholder="Film Title"></InputText>
+                    <InputText id="Genre Title" class="form-control me-2" @bind-Value="Model.Similar.Title" disabled placeholder="Genre Name"></InputText>
                 }
                 else
                 {
-                    <InputNumber id="filmid" class="form-control mb-1" @bind-Value="Model.FilmId" placeholder="FilmId"></InputNumber>
-                    <InputNumber id="similarid" class="form-control mb-1" @bind-Value="Model.SimilarFilmId" placeholder="SimilarId"></InputNumber>
+                    <InputSelect @bind-Value="Model.FilmId" class="form-control mb-3">
+                        <option value=0>Film Title ...</option>
+                        @foreach (var film in Films)
+                        {
+                            <option value="@film.Id">@film.Title</option>
+                        }
+                    </InputSelect>
+                    <InputSelect @bind-Value="Model.SimilarFilmId" class="form-control mb-3">
+                        <option value=0>Similarfilm Title ...</option>
+                        @foreach (var film in Films)
+                        {
+                            <option value="@film.Id">@film.Title</option>
+                        }
+                    </InputSelect>
                 }
             </div>
             <ValidationMessage For="@(() => Model.FilmId)" />
-
+            <ValidationMessage For="@(() => Model.SimilarFilmId)" />
+            
             <div>
-                <button type="submit" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page SimilarFilm</button>
-            </div>
+                <button type="submit" disabled="@(Model.FilmId.Equals(Model.SimilarFilmId))" class="btn btn-@(Page.Equals(PageType.Delete)? "danger" : "primary") rounded-0 mb-1">@Page SimilarFilm</button>
+            </div>                
+
         </EditForm>
     </form>
 </div>
@@ -29,6 +43,12 @@
     [Parameter] public SimilarFilmsDTO Model { get; set; } = new();
     [Parameter] public string Page { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> OnChange { get; set; }
+    List<FilmDTO> Films { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Films = await AdminService.GetAsync<FilmDTO>("Films");
+    }
 
     private async Task OnFormSubmit()
     {

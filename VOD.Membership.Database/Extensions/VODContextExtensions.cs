@@ -1,4 +1,6 @@
 ﻿
+using VOD.Films.Database.Services;
+
 namespace VOD.Films.Database.Extensions;
 
 public static class VODContextExtensions

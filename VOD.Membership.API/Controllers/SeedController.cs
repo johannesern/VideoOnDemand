@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using VOD.Films.Database.Services;
 
 namespace VOD.Films.API.Controllers;
 

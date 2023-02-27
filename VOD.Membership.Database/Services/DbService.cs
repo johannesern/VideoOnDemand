@@ -1,10 +1,10 @@
-﻿namespace VOD.Films.Database;
+﻿namespace VOD.Films.Database.Services;
 
 public class DbService : IDbService
 {
     private readonly VODContext _db;
     private readonly IMapper _mapper;
-    public DbService(VODContext db, IMapper mapper) 
+    public DbService(VODContext db, IMapper mapper)
     {
         _db = db;
         _mapper = mapper;
@@ -38,7 +38,7 @@ public class DbService : IDbService
         await _db.Set<TEntity>().AddAsync(entity);
         return entity;
     }
-    
+
     //PUT
     public void Update<TEntity, TDto>(int id, TDto dto)
         where TEntity : class, IEntity
@@ -76,7 +76,7 @@ public class DbService : IDbService
             _db.Remove(entity);
         }
         catch { throw; }
-        
+
         return true;
     }
 
@@ -87,9 +87,9 @@ public class DbService : IDbService
         var propertyNames = _db.Model.FindEntityType(
             typeof(TEntity))?.GetNavigations()
             .Select(e => e.Name);
-        if(propertyNames != null) 
+        if (propertyNames != null)
         {
-            foreach( var name in propertyNames)
+            foreach (var name in propertyNames)
             {
                 _db.Set<TEntity>().Include(name).Load();
             }
@@ -113,7 +113,7 @@ public class DbService : IDbService
     {
         var entity = await SingelAsync(expression);
         return _mapper.Map<TDto>(entity);
-    }    
+    }
 
     private async Task<TReferenceEntity?> SingelAsync<TReferenceEntity>(
     Expression<Func<TReferenceEntity, bool>> expression)
@@ -121,13 +121,13 @@ public class DbService : IDbService
         await _db.Set<TReferenceEntity>().SingleOrDefaultAsync(expression);
 
     public async Task<TReferenceEntity> AddReferenceAsync<TReferenceEntity, TDto>(TDto dto)
-		where TReferenceEntity : class, IReferenceEntity
-		where TDto : class
-	{
-		var entity = _mapper.Map<TReferenceEntity>(dto);
-		await _db.Set<TReferenceEntity>().AddAsync(entity);
-		return entity;
-	}
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        var entity = _mapper.Map<TReferenceEntity>(dto);
+        await _db.Set<TReferenceEntity>().AddAsync(entity);
+        return entity;
+    }
 
     public bool DeleteReference<TReferenceEntity, TDto>(TDto dto)
             where TReferenceEntity : class, IReferenceEntity
@@ -136,9 +136,9 @@ public class DbService : IDbService
         try
         {
             var entity = _mapper.Map<TReferenceEntity>(dto);
-            if (entity == null) 
-            { 
-                return false; 
+            if (entity == null)
+            {
+                return false;
             }
             _db.Remove(entity);
         }

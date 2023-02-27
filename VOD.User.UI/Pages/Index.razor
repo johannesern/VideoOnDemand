@@ -19,7 +19,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Genres = await userService.GetGenresAsync();
+        var unsortedGenres = await userService.GetGenresAsync();
+        Genres = unsortedGenres.OrderBy(g => g.Name).ToList();
         Films = await userService.GetFilmsAsync();
     }
 }

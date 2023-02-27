@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VOD.Films.Database.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace VOD.Films.API.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class GenresController : ControllerBase
 	{

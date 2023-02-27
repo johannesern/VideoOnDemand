@@ -1,4 +1,4 @@
-namespace VOD.User.UI;
+namespace VOD.User.UI.Client;
 
 public class Program
 {

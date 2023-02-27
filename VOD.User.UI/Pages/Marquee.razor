@@ -1,6 +1,6 @@
 ﻿
 <div class="d-flex flex-column">
-    <a href=""><div class="marquee" style="background-image:url('images/@Model.BackgroundURL');">
+    <a href="filmplayer/@Model.Id"><div class="marquee" style="background-image:url('images/@Model.BackgroundURL');">
         <img class="" src="images/@Model.ThumbnailURL" />
         </div>
     </a>
@@ -25,7 +25,9 @@
         @foreach (var film in SimilarFilms)
         {
             <div class="similarfilms m-1">
-                <a href="Film/@film.SimilarFilmId"><img src="images/@film.Similar.ThumbnailURL" /></a>
+                <a href="filmplayer/@film.SimilarFilmId" >
+                    <img src="images/@film.Similar.ThumbnailURL" />
+                </a>
             </div>
         }
     </div>    

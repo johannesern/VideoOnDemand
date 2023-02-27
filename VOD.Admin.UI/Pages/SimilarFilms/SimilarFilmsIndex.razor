@@ -2,7 +2,9 @@
     <thead>
         <tr>
             <th scope="col">FilmID</th>
+            <th scope="col">Film Title</th>
             <th scope="col">SimilarFilmID</th>
+            <th scope="col">Similarfilm Title</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -11,7 +13,9 @@
         {
             <tr>
                 <th scope="row">@(item.FilmId)</th>
+                <td>@(item.Film?.Title)</td>
                 <td>@(item.SimilarFilmId)</td>
+                <td>@(item.Similar?.Title)</td>
                 <td>                    
                     <button type="button" class="btn btn-outline-danger rounded-0 me-1" @onclick="@( async () => await OnClick.InvokeAsync(
                         new ClickRefModel<SimilarFilmsDTO>(PageType.Delete, item)))">

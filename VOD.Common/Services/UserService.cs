@@ -31,7 +31,7 @@ public class UserService : IUserService
     {
         try
         {
-            if (id <= 0) return new();
+            if (id is null) throw new ArgumentNullException("id");
 
             using var response = await _http.Client.GetAsync($"films/{id}");
             response.EnsureSuccessStatusCode();

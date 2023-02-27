@@ -1,4 +1,6 @@
-﻿namespace VOD.Films.API.Controllers;
+﻿using VOD.Films.Database.Services;
+
+namespace VOD.Films.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

@@ -4,7 +4,7 @@
 <div class="d-flex flex-row flex-wrap mb-2">
     @foreach (var film in filteredFilms)
     {
-            <FilmCard Film="@film" />        
+        <FilmCard Film="@film" />        
     }
 </div>    
 
@@ -15,6 +15,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        filteredFilms = Films.Where(film => film.Genres.Contains(Genre.Name)).ToList();
+        filteredFilms = Films.Where(film => film.Genres.Contains(Genre.Name)).OrderBy(f => f.Title).ToList();
     }
 }

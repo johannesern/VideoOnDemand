@@ -1,4 +1,4 @@
-namespace VOD.FilmsAdmin.UI;
+namespace VOD.Admin.UI;
 
 public class Program
 {
@@ -9,12 +9,12 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
-		builder.Services.AddHttpClient<FilmsHttpClient>(client =>
+        builder.Services.AddHttpClient<FilmsHttpClient>(client =>
             client.BaseAddress = new Uri("https://localhost:5000/api/"));
 
         builder.Services.AddScoped<IAdminService, AdminService>();
 
-		var app = builder.Build();
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
