@@ -25,7 +25,7 @@
         @foreach (var film in SimilarFilms)
         {
             <div class="similarfilms m-1">
-                <a href="filmplayer/@film.SimilarFilmId" >
+                <a href="film/@film.SimilarFilmId" >
                     <img src="images/@film.Similar.ThumbnailURL" />
                 </a>
             </div>
@@ -37,5 +37,5 @@
     [Parameter] public FilmDTO Model { get; set; } = new();
     [Parameter] public List<SimilarFilmsDTO> SimilarFilms { get; set; } = new();
     [Parameter] public List<FilmGenreDTO> FilmGenres { get; set; } = new();
-    
+
 }

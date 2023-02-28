@@ -17,7 +17,7 @@
     List<FilmDTO>? Films { get; set; } = new();
     List<GenreDTO>? Genres { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         var unsortedGenres = await userService.GetGenresAsync();
         Genres = unsortedGenres.OrderBy(g => g.Name).ToList();

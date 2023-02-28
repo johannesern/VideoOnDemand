@@ -30,12 +30,6 @@ public class VODContext : DbContext
             .WithMany(f => f.Films)
             .UsingEntity<FilmGenre>()
             .ToTable("FilmGenres");
-        });
-
-        //foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e
-        //    => e.GetForeignKeys()))
-        //{
-        //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-        //}
+        });        
     }
 }

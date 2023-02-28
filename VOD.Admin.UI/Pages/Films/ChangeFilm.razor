@@ -22,9 +22,15 @@
                     <InputText id="description" class="form-control mb-1" @bind-Value="Model.Description" placeholder="Description"></InputText>
                 </div>
                 <ValidationMessage For="@(() => Model.Description)" />
-
-                <div>
-                    <InputText id="description" class="form-control mb-1" @bind-Value="Model.Released" placeholder="Released"></InputText>
+                
+                <div class="d-flex flex-row">
+                    <InputSelect id="date" class="form-control mb-1" @bind-Value="Model.Released">
+                    <option value=0>Year...</option>                                                     
+                        @foreach (var year in Years)
+                        {
+                            <option value="@year">@year</option>                                
+                        }
+                    </InputSelect>
                 </div>
                 <ValidationMessage For="@(() => Model.Released)" />
 
@@ -71,6 +77,7 @@
     [Parameter] public EventCallback<string> OnChange { get; set; }
     List<DirectorDTO> Directors = new();
     List<GenreDTO> Genres = new();
+    List<int> Years = new();
 
     private async Task OnFormSubmit()
     {
@@ -97,5 +104,10 @@
     {
         Directors = await AdminService.GetAsync<DirectorDTO>($"directors");
         Genres = await AdminService.GetAsync<GenreDTO>($"genres");
+
+        for (int i = 1900; i < DateTime.Now.Year; i++)
+        {
+            Years.Add(i);
+        }
     }  
 }

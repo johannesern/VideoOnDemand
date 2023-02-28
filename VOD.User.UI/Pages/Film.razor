@@ -15,7 +15,7 @@
     public List<SimilarFilmsDTO> SimilarFilms { get; set; } = new();
     public List<FilmGenreDTO> FilmGenres { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         Model = await userService.GetFilmAsync(Id);
 
